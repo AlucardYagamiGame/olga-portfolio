@@ -1,0 +1,101 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.contacts {
+  @include container;
+
+  max-width: 720px;
+  margin-bottom: 40px;
+}
+
+.cloud {
+  top: -20px;
+  left: -28px;
+  --float-delay: 0.3s;
+}
+
+.heart {
+  right: -34px;
+  bottom: -14px;
+  --float-duration: 4.5s;
+  --float-delay: 1s;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.card {
+  @include surface;
+  @include focus-ring;
+
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 22px;
+  transition:
+    transform $transition,
+    box-shadow $transition,
+    border-color $transition;
+
+  &:hover {
+    @include surface-hover;
+
+    transform: translateY(-3px);
+
+    .icon {
+      transform: scale(1.05);
+    }
+
+    .chevron {
+      transform: translateX(6px);
+    }
+  }
+
+  @include on-phone {
+    gap: 14px;
+    padding: 16px 18px;
+  }
+}
+
+.icon {
+  @include icon-circle;
+}
+
+.text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.title {
+  color: var(--text-strong);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.handle {
+  overflow: hidden;
+  color: var(--color-kicker);
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chevron {
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  line-height: 1;
+  transition: transform $transition;
+}
