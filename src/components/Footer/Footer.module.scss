@@ -1,0 +1,130 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.footer {
+  position: relative;
+  background: var(--bg-footer);
+
+  &::before {
+    @include dashed-line(top);
+  }
+}
+
+.inner {
+  @include container;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 48px;
+  padding: 64px 32px 48px;
+
+  @include on-phone {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    padding: 44px 16px 32px;
+  }
+}
+
+.connect {
+  justify-self: end;
+
+  @include on-phone {
+    justify-self: start;
+  }
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.tagline {
+  max-width: 380px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.backToTop {
+  @include focus-ring;
+
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 16px;
+  border: 1px solid var(--btn-secondary-border);
+  border-radius: $radius-pill;
+  background: var(--btn-secondary-bg);
+  box-shadow: var(--surface-shadow);
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  transition: border-color $transition;
+
+  svg {
+    transition: transform $transition;
+  }
+
+  &:hover {
+    border-color: var(--surface-border-hover);
+
+    svg {
+      transform: translateY(-3px);
+    }
+  }
+}
+
+.heading {
+  @include kicker;
+
+  margin-bottom: 18px;
+  font-family: var(--font-body);
+}
+
+.socials {
+  display: flex;
+  gap: 10px;
+}
+
+.social {
+  @include focus-ring;
+  @include icon-circle(42px);
+
+  &:hover {
+    transform: translateY(-3px) scale(1.05);
+  }
+}
+
+.bottom {
+  @include container;
+
+  position: relative;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 22px 32px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+
+  &::before {
+    @include dashed-line(top);
+  }
+
+  @include on-tablet {
+    flex-direction: column;
+  }
+
+  @include on-phone {
+    padding: 22px 16px;
+  }
+}
+
+.made {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.heart {
+  color: var(--color-heart);
+}
