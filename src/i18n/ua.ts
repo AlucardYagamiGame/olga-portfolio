@@ -133,10 +133,11 @@ export const ua: Dictionary = {
     kicker: 'Контакти',
     title: 'Звʼяжімося',
     description:
-      'Шукаєте розробницю до команди чи продукту? Напишіть мені в LinkedIn або {перегляньте} мій код на GitHub.',
+      'Шукаєте розробницю до команди чи продукту? Напишіть мені в LinkedIn чи Telegram або {перегляньте} мій код на GitHub.',
     items: {
       linkedin: { title: 'LinkedIn', text: 'Напишіть мені напряму' },
       github: { title: 'GitHub', text: 'Код усіх моїх проєктів' },
+      telegram: { title: 'Telegram', text: 'Напишіть мені в месенджері' },
     },
     opensInNewTab: 'відкривається в новій вкладці',
   },

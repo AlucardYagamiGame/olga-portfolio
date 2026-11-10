@@ -132,10 +132,11 @@ export const en: Dictionary = {
     kicker: 'Contact',
     title: 'Let’s connect',
     description:
-      'Looking for a developer for your team or product? Message me on LinkedIn or {explore} my code on GitHub.',
+      'Looking for a developer for your team or product? Message me on LinkedIn or Telegram, or {explore} my code on GitHub.',
     items: {
       linkedin: { title: 'LinkedIn', text: 'Message me directly' },
       github: { title: 'GitHub', text: 'The code of all my projects' },
+      telegram: { title: 'Telegram', text: 'Write me a message' },
     },
     opensInNewTab: 'opens in a new tab',
   },

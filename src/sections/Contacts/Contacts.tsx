@@ -9,7 +9,7 @@ import styles from './Contacts.module.scss';
 
 import type { ContactId } from '@/i18n';
 
-const CONTACTS: readonly ContactId[] = ['linkedin', 'github'];
+const CONTACTS: readonly ContactId[] = ['linkedin', 'github', 'telegram'];
 
 export const Contacts = () => {
   const { t } = useTranslation();
@@ -50,7 +50,7 @@ export const Contacts = () => {
               className={styles.card}
               href={DEVELOPER[id].url}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               <span className={styles.icon}>
                 <BrandIcon

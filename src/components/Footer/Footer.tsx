@@ -60,6 +60,20 @@ export const Footer = () => {
                 />
               </a>
             </li>
+            <li>
+              <a
+                className={styles.social}
+                href={DEVELOPER.telegram.url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Telegram, ${t.contacts.opensInNewTab}`}
+              >
+                <BrandIcon
+                  brand="telegram"
+                  size={20}
+                />
+              </a>
+            </li>
           </ul>
         </div>
       </div>

@@ -8,7 +8,7 @@ export type FactId = 'conversion' | 'speed' | 'costs' | 'markets';
 
 export type HeroCardId = 'speed' | 'costs';
 
-export type ContactId = 'linkedin' | 'github';
+export type ContactId = 'linkedin' | 'github' | 'telegram';
 
 export interface QuickFact {
   title: string;

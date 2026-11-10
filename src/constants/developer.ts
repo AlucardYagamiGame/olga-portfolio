@@ -7,4 +7,8 @@ export const DEVELOPER = {
     url: 'https://www.linkedin.com/in/olga-shcherbatiuk',
     handle: 'olga-shcherbatiuk',
   },
+  telegram: {
+    url: 'https://t.me/olga_scherbatuik',
+    handle: '@olga_scherbatuik',
+  },
 } as const;

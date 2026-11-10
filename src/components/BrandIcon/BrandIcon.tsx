@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react';
 
-export type Brand = 'github' | 'linkedin';
+export type Brand = 'github' | 'linkedin' | 'telegram';
 
 interface BrandIconProps extends SVGProps<SVGSVGElement> {
   brand: Brand;
@@ -28,6 +28,12 @@ const PATHS: Record<Brand, JSX.Element> = {
         cy="4"
         r="2"
       />
+    </>
+  ),
+  telegram: (
+    <>
+      <path d="M22 2 11 13" />
+      <path d="M22 2 15 22l-4-9-9-4z" />
     </>
   ),
 };
