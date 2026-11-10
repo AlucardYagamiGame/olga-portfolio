@@ -1,0 +1,86 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.about {
+  @include container;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 24px;
+
+  @include on-tablet {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.story {
+  @include surface;
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 40px;
+  border-radius: $radius-lg;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.8;
+
+  @include on-phone {
+    padding: 26px 20px;
+    font-size: 1rem;
+  }
+}
+
+.sparkle {
+  top: -12px;
+  right: 28px;
+  --float-duration: 4.5s;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fact {
+  @include surface;
+
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 22px;
+  transition:
+    transform $transition,
+    box-shadow $transition,
+    border-color $transition;
+
+  &:hover {
+    @include surface-hover;
+
+    transform: translateY(-3px);
+
+    .icon {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.icon {
+  @include icon-circle;
+}
+
+.factTitle {
+  display: block;
+  color: var(--text-strong);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.factText {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
