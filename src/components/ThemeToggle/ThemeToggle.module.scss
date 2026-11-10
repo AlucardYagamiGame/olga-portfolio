@@ -1,0 +1,25 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.toggle {
+  @include focus-ring;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--btn-secondary-border);
+  border-radius: 50%;
+  background: var(--btn-secondary-bg);
+  box-shadow: var(--surface-shadow);
+  color: var(--text-primary);
+  transition:
+    border-color $transition,
+    transform $transition-spring;
+
+  &:hover {
+    border-color: var(--surface-border-hover);
+    transform: rotate(-15deg) scale(1.06);
+  }
+}
