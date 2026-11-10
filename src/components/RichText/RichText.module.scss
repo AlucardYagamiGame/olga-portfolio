@@ -1,0 +1,8 @@
+@use '@/styles/mixins' as *;
+
+.chip {
+  @include chip;
+
+  margin: 0 1px;
+  line-height: 1.5;
+}

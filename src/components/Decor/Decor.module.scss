@@ -1,0 +1,38 @@
+@use '@/styles/mixins' as *;
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(3deg);
+  }
+}
+
+.decor {
+  position: absolute;
+  overflow: visible;
+  filter: drop-shadow(0 0 1px var(--decor-outline))
+    drop-shadow(0 0 1px var(--decor-outline))
+    drop-shadow(0 4px 10px rgba(var(--color-accent-rgb), 0.25));
+  pointer-events: none;
+
+  @include motion {
+    animation: float-slow var(--float-duration, 5s) ease-in-out
+      var(--float-delay, 0s) infinite;
+  }
+}
+
+.stop1 {
+  stop-color: var(--decor-1);
+}
+
+.stop2 {
+  stop-color: var(--decor-2);
+}
+
+.stop3 {
+  stop-color: var(--decor-3);
+}
