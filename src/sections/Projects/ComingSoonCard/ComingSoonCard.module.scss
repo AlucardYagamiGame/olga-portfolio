@@ -1,0 +1,63 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 300px;
+  padding: 28px 24px;
+  border: 1.5px dashed var(--divider);
+  border-radius: $radius-lg;
+  background: rgba(var(--color-accent-rgb), 0.03);
+  text-align: center;
+  transition:
+    border-color $transition,
+    background $transition;
+
+  &:hover {
+    border-color: rgba(var(--color-accent-rgb), 0.5);
+    background: rgba(var(--color-accent-rgb), 0.06);
+
+    .icon {
+      transform: rotate(-12deg) scale(1.08);
+    }
+  }
+}
+
+.iconWrap {
+  position: relative;
+}
+
+.icon {
+  @include icon-circle(56px);
+
+  transition: transform $transition-spring;
+}
+
+.sparkle {
+  top: -8px;
+  right: -12px;
+}
+
+.badge {
+  @include kicker;
+
+  font-size: 0.72rem;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: var(--title-weight);
+  letter-spacing: -0.02em;
+}
+
+.text {
+  max-width: 280px;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
