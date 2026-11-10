@@ -1,0 +1,42 @@
+@use '@/styles/mixins' as *;
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 44px;
+
+  @include on-phone {
+    margin-bottom: 32px;
+  }
+}
+
+.centered {
+  align-items: center;
+  text-align: center;
+}
+
+.kicker {
+  @include kicker;
+}
+
+.title {
+  position: relative;
+  display: inline-block;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: var(--title-weight);
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+}
+
+.titleText {
+  @include text-fade;
+}
+
+.description {
+  max-width: 560px;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}

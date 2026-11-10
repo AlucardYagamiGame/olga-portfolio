@@ -1,0 +1,246 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
+.header {
+  position: sticky;
+  z-index: 100;
+  top: 0;
+
+  &::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: var(--header-bg);
+    backdrop-filter: blur(14px);
+    content: '';
+  }
+
+  &::after {
+    @include dashed-line(bottom);
+  }
+}
+
+.bar {
+  @include container;
+
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+  height: $header-height;
+  padding: 0 32px;
+
+  @include on-phone {
+    gap: 12px;
+    height: $header-height-phone;
+    padding: 0 16px;
+  }
+}
+
+.enter {
+  @include motion {
+    animation: rise-in 0.85s $ease-reveal both;
+    animation-delay: calc(var(--i) * 0.09s + 0.08s);
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+
+  @include on-nav-collapse {
+    position: fixed;
+    z-index: -1;
+    inset: 0;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 32px;
+    padding: calc(#{$header-height} + 24px) 32px 40px;
+    overflow-y: auto;
+    background: var(--overlay-bg);
+    backdrop-filter: blur(18px);
+    transform: translateX(100%);
+    transition:
+      transform 0.6s $ease-menu,
+      visibility 0.6s;
+    visibility: hidden;
+  }
+
+  @include on-phone {
+    padding: calc(#{$header-height-phone} + 16px) 20px 32px;
+  }
+}
+
+.navOpen {
+  @include on-nav-collapse {
+    transform: translateX(0);
+    visibility: visible;
+  }
+}
+
+.list {
+  display: flex;
+  gap: 32px;
+
+  @include on-tablet {
+    gap: 22px;
+  }
+
+  @include on-nav-collapse {
+    flex-direction: column;
+    gap: 0;
+
+    li {
+      animation: none;
+    }
+  }
+}
+
+.link {
+  @include focus-ring;
+
+  position: relative;
+  display: block;
+  padding: 6px 0;
+  color: var(--text-nav);
+  font-size: 0.9rem;
+  font-weight: 400;
+  opacity: 0.65;
+  transition: opacity $transition;
+
+  &::after {
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-highlight);
+    content: '';
+    opacity: 0;
+    transform: translateX(-50%) scale(0);
+    transition:
+      opacity $transition,
+      transform $transition;
+  }
+
+  &:hover,
+  &.active {
+    opacity: 1;
+  }
+
+  &.active::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+
+  @include on-nav-collapse {
+    @include display-font;
+
+    padding: 22px 0;
+    color: var(--text-strong);
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    opacity: 1;
+
+    &::after {
+      @include dashed-line(bottom);
+
+      left: 0;
+      width: 100%;
+      height: 1px;
+      border-radius: 0;
+      background-color: transparent;
+      opacity: 1;
+      transform: none;
+    }
+
+    &.active {
+      color: var(--color-accent);
+    }
+
+    &.active::after {
+      transform: none;
+    }
+  }
+
+  @include on-phone {
+    padding: 18px 0;
+    font-size: 2rem;
+  }
+}
+
+.menuCta {
+  display: none;
+
+  @include on-nav-collapse {
+    display: inline-flex;
+    align-self: flex-start;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.cta {
+  margin-left: 6px;
+
+  @include on-nav-collapse {
+    display: none;
+  }
+}
+
+.burger {
+  @include focus-ring;
+
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+
+  span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--text-primary);
+    transition:
+      transform 0.35s $ease-menu,
+      opacity 0.25s ease;
+  }
+
+  @include on-nav-collapse {
+    display: inline-flex;
+  }
+}
+
+.burgerOpen {
+  span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  span:nth-child(2) {
+    opacity: 0;
+  }
+
+  span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}

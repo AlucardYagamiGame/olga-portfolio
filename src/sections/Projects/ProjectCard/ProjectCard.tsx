@@ -1,0 +1,160 @@
+import { Check } from 'lucide-react';
+import { useRef } from 'react';
+
+import { BrandIcon } from '@/components/BrandIcon';
+import { PillLink } from '@/components/PillLink';
+import { useTheme, useTranslation } from '@/hooks';
+import { canUsePointerEffects } from '@/utils/pointer';
+
+import styles from './ProjectCard.module.scss';
+
+import type { Project } from '@/constants';
+import type { MouseEvent } from 'react';
+
+const MAX_TILT = 6;
+
+interface ProjectCardProps {
+  project: Project;
+}
+
+export const ProjectCard = ({ project }: ProjectCardProps) => {
+  const { t } = useTranslation();
+  const { theme } = useTheme();
+  const cardRef = useRef<HTMLElement>(null);
+  const text = t.projects.items[project.id];
+  const titleId = `project-${project.id}`;
+  const externalLabel = `${text.title}, ${t.contacts.opensInNewTab}`;
+  const size = project.featured ? 'md' : 'sm';
+
+  const handleMove = (event: MouseEvent<HTMLElement>) => {
+    const card = cardRef.current;
+
+    if (!card || !canUsePointerEffects()) {
+      return;
+    }
+
+    const rect = card.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width;
+    const y = (event.clientY - rect.top) / rect.height;
+    const tilt = project.featured ? MAX_TILT / 2 : MAX_TILT;
+
+    card.style.setProperty('--glare-x', `${x * 100}%`);
+    card.style.setProperty('--glare-y', `${y * 100}%`);
+    card.style.transform = `rotateX(${(0.5 - y) * tilt}deg) rotateY(${(x - 0.5) * tilt}deg) scale3d(1.01, 1.01, 1.01)`;
+  };
+
+  const handleLeave = () => {
+    if (cardRef.current) {
+      cardRef.current.style.transform = '';
+    }
+  };
+
+  return (
+    <div
+      className={`${styles.wrapper} ${project.featured ? styles.featured : styles.compact}`}
+    >
+      <article
+        ref={cardRef}
+        className={styles.card}
+        aria-labelledby={titleId}
+        onMouseMove={handleMove}
+        onMouseLeave={handleLeave}
+      >
+        <div className={styles.media}>
+          <div className={styles.frame}>
+            <span
+              className={styles.frameBar}
+              aria-hidden="true"
+            >
+              <span />
+              <span />
+              <span />
+            </span>
+            <img
+              className={styles.image}
+              src={
+                theme === 'light' && project.imageLight ?
+                  project.imageLight
+                : project.image
+              }
+              alt={t.projects.screenshotAlt(text.title)}
+              width={project.imageWidth}
+              height={project.imageHeight}
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <div className={styles.body}>
+          <p className={styles.kicker}>{text.kicker}</p>
+          <h3
+            id={titleId}
+            className={styles.title}
+          >
+            {text.title}
+          </h3>
+
+          <p className={styles.description}>{text.description}</p>
+
+          {text.highlights.length > 0 && (
+            <ul className={styles.highlights}>
+              {text.highlights.map((item) => (
+                <li key={item}>
+                  <span className={styles.check}>
+                    <Check
+                      size={14}
+                      strokeWidth={3}
+                      aria-hidden="true"
+                    />
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <ul className={styles.tags}>
+            {project.tags.map((tag) => (
+              <li
+                key={tag}
+                className={styles.tag}
+              >
+                {tag}
+              </li>
+            ))}
+          </ul>
+
+          <div className={styles.links}>
+            <PillLink
+              href={project.demo}
+              size={size}
+              withArrow
+              externalLabel={externalLabel}
+            >
+              {t.projects.demo}
+            </PillLink>
+            <PillLink
+              href={project.code}
+              size={size}
+              variant="secondary"
+              icon={
+                <BrandIcon
+                  brand="github"
+                  size={16}
+                />
+              }
+              externalLabel={externalLabel}
+            >
+              {t.projects.code}
+            </PillLink>
+          </div>
+        </div>
+
+        <span
+          className={styles.glare}
+          aria-hidden="true"
+        />
+      </article>
+    </div>
+  );
+};

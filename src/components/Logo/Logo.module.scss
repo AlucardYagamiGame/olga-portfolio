@@ -1,0 +1,45 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.logo {
+  @include focus-ring;
+
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  border-radius: 10px;
+
+  &:hover .mark {
+    opacity: 0.75;
+  }
+}
+
+.mark {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  margin-right: -2px;
+  color: var(--color-highlight);
+  transition: opacity $transition;
+}
+
+.wordmark {
+  @include display-font;
+
+  position: relative;
+  color: var(--wordmark);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.sup {
+  position: relative;
+  top: -0.7em;
+  margin-left: 2px;
+  color: var(--color-highlight);
+  font-size: 0.55em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}

@@ -1,0 +1,47 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.switch {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid var(--btn-secondary-border);
+  border-radius: $radius-pill;
+  background: var(--btn-secondary-bg);
+  box-shadow: var(--surface-shadow);
+}
+
+.option {
+  @include focus-ring;
+
+  padding: 5px 11px;
+  border-radius: $radius-pill;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition:
+    color $transition,
+    background $transition;
+
+  &:hover {
+    color: var(--text-primary);
+  }
+}
+
+.active {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+
+  &:hover {
+    color: #ffffff;
+  }
+
+  :global(:root[data-theme='light']) & {
+    background: #161616;
+    color: #ffffff;
+
+    &:hover {
+      color: #ffffff;
+    }
+  }
+}
