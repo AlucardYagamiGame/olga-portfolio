@@ -65,7 +65,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
 
     card.style.setProperty('--glare-x', `${x * 100}%`);
     card.style.setProperty('--glare-y', `${y * 100}%`);
-    card.style.transform = `rotateX(${(0.5 - y) * tilt}deg) rotateY(${(x - 0.5) * tilt}deg) scale3d(1.01, 1.01, 1.01)`;
+    card.style.transform = `rotateX(${(0.5 - y) * tilt}deg) rotateY(${(x - 0.5) * tilt}deg)`;
   };
 
   const handleLeave = () => {
