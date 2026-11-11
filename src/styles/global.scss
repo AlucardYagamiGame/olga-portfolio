@@ -66,6 +66,11 @@
     0 10px 30px rgba(111, 90, 220, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   --btn-arrow-bg: #ffffff;
   --btn-arrow-color: #4d19b1;
+  --btn-accent-bg: rgba(159, 240, 236, 0.08);
+  --btn-accent-border: rgba(159, 240, 236, 0.4);
+  --btn-accent-text: #9ff0ec;
+  --btn-accent-shadow: 0 0 22px rgba(159, 240, 236, 0.16);
+  --btn-accent-shadow-hover: 0 0 28px rgba(159, 240, 236, 0.3);
   --btn-secondary-bg: rgba(255, 255, 255, 0.04);
   --btn-secondary-border: rgba(255, 255, 255, 0.16);
   --btn-secondary-text: #ffffff;
@@ -154,6 +159,11 @@
   --btn-primary-bg: linear-gradient(180deg, #2c2c2c 0%, #111111 100%);
   --btn-primary-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
   --btn-arrow-color: #111111;
+  --btn-accent-bg: rgba(159, 240, 236, 0.22);
+  --btn-accent-border: rgba(15, 138, 130, 0.35);
+  --btn-accent-text: #0b6f69;
+  --btn-accent-shadow: 0 2px 12px rgba(31, 168, 160, 0.14);
+  --btn-accent-shadow-hover: 0 4px 20px rgba(31, 168, 160, 0.26);
   --btn-secondary-bg: #ffffff;
   --btn-secondary-border: rgba(0, 0, 0, 0.08);
   --btn-secondary-text: #1a1a1a;

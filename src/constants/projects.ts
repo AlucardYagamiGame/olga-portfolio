@@ -14,6 +14,7 @@ export interface Project {
   tags: readonly string[];
   code: string;
   demo: string;
+  personal?: string;
   featured?: boolean;
 }
 
@@ -35,6 +36,7 @@ export const PROJECTS: readonly Project[] = [
     ],
     code: 'https://github.com/AlucardYagamiGame/gadgets-catalog',
     demo: 'https://gadgets-catalog-swart.vercel.app',
+    personal: 'https://github.com/AlucardYagamiGame/gadgets-catalog',
     featured: true,
   },
   {

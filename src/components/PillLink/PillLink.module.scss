@@ -59,6 +59,18 @@
   }
 }
 
+.accent {
+  border-color: var(--btn-accent-border);
+  background: var(--btn-accent-bg);
+  box-shadow: var(--btn-accent-shadow);
+  color: var(--btn-accent-text);
+
+  &:hover {
+    border-color: var(--btn-accent-text);
+    box-shadow: var(--btn-accent-shadow-hover);
+  }
+}
+
 .secondary {
   border-color: var(--btn-secondary-border);
   background: var(--btn-secondary-bg);

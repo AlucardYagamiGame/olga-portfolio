@@ -159,6 +159,19 @@
     }
   }
 
+  .links {
+    align-items: stretch;
+
+    @include on-phone {
+      flex-direction: column;
+
+      > a {
+        justify-content: center;
+        white-space: normal;
+      }
+    }
+  }
+
   .media {
     align-items: center;
     padding: 24px;
