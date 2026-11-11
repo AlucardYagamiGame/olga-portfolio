@@ -1,5 +1,5 @@
-import { Check } from 'lucide-react';
-import { useRef } from 'react';
+import { Check, UserRound } from 'lucide-react';
+import { useRef, useSyncExternalStore } from 'react';
 
 import { BrandIcon } from '@/components/BrandIcon';
 import { PillLink } from '@/components/PillLink';
@@ -12,6 +12,18 @@ import type { Project } from '@/constants';
 import type { MouseEvent } from 'react';
 
 const MAX_TILT = 6;
+const DESKTOP_QUERY = '(min-width: 1100px)';
+
+const subscribeDesktop = (onChange: () => void) => {
+  const query = window.matchMedia(DESKTOP_QUERY);
+
+  query.addEventListener('change', onChange);
+
+  return () => query.removeEventListener('change', onChange);
+};
+
+const getDesktop = () => window.matchMedia(DESKTOP_QUERY).matches;
+const getDesktopServer = () => false;
 
 interface ProjectCardProps {
   project: Project;
@@ -24,6 +36,19 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
   const text = t.projects.items[project.id];
   const titleId = `project-${project.id}`;
   const externalLabel = `${text.title}, ${t.contacts.opensInNewTab}`;
+  const isDesktop = useSyncExternalStore(
+    subscribeDesktop,
+    getDesktop,
+    getDesktopServer,
+  );
+  const descriptionInMedia = project.featured && isDesktop;
+  const description = (
+    <p
+      className={`${styles.description} ${descriptionInMedia ? styles.descriptionMedia : ''}`}
+    >
+      {text.description}
+    </p>
+  );
   const size = project.featured ? 'md' : 'sm';
 
   const handleMove = (event: MouseEvent<HTMLElement>) => {
@@ -40,7 +65,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
 
     card.style.setProperty('--glare-x', `${x * 100}%`);
     card.style.setProperty('--glare-y', `${y * 100}%`);
-    card.style.transform = `rotateX(${(0.5 - y) * tilt}deg) rotateY(${(x - 0.5) * tilt}deg) scale3d(1.01, 1.01, 1.01)`;
+    card.style.transform = `rotateX(${(0.5 - y) * tilt}deg) rotateY(${(x - 0.5) * tilt}deg)`;
   };
 
   const handleLeave = () => {
@@ -83,6 +108,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
               loading="lazy"
             />
           </div>
+          {descriptionInMedia && description}
         </div>
 
         <div className={styles.body}>
@@ -94,7 +120,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
             {text.title}
           </h3>
 
-          <p className={styles.description}>{text.description}</p>
+          {!descriptionInMedia && description}
 
           {text.highlights.length > 0 && (
             <ul className={styles.highlights}>
@@ -147,6 +173,22 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
             >
               {t.projects.code}
             </PillLink>
+            {project.personal && (
+              <PillLink
+                href={project.personal}
+                size={size}
+                variant="accent"
+                icon={
+                  <UserRound
+                    size={16}
+                    aria-hidden="true"
+                  />
+                }
+                externalLabel={externalLabel}
+              >
+                {t.projects.personal}
+              </PillLink>
+            )}
           </div>
         </div>
 

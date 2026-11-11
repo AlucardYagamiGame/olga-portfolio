@@ -7,7 +7,7 @@ import type { ReactNode } from 'react';
 interface PillLinkProps {
   href: string;
   children: ReactNode;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'accent';
   size?: 'md' | 'sm';
   icon?: ReactNode;
   withArrow?: boolean;
@@ -41,7 +41,7 @@ export const PillLink = ({
       className={classes}
       href={href}
       target={isExternal ? '_blank' : undefined}
-      rel={isExternal ? 'noreferrer' : undefined}
+      rel={isExternal ? 'noopener noreferrer' : undefined}
       onClick={onClick}
     >
       {withArrow && (

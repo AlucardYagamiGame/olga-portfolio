@@ -93,6 +93,7 @@ export const ua: Dictionary = {
     description:
       'Справжні продукти зі справжніми сценаріями: від повноцінного магазину до лендингу.',
     code: 'Код',
+    personal: 'Персональна версія',
     demo: 'Демо',
     screenshotAlt: (title) => `Скріншот проєкту ${title}`,
     items: {
