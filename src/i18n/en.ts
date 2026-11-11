@@ -92,6 +92,7 @@ export const en: Dictionary = {
     description:
       'Real products with real user flows, from a full online store to a landing page.',
     code: 'Code',
+    personal: 'Personal version',
     demo: 'Live demo',
     screenshotAlt: (title) => `Screenshot of ${title}`,
     items: {
