@@ -1,7 +1,6 @@
 import { ArrowUp, Heart } from 'lucide-react';
 
 import { BrandIcon } from '@/components/BrandIcon';
-import { Logo } from '@/components/Logo';
 import { DEVELOPER } from '@/constants';
 import { useTranslation } from '@/hooks';
 
@@ -15,8 +14,6 @@ export const Footer = () => {
     <footer className={styles.footer}>
       <div className={styles.inner}>
         <div className={styles.brand}>
-          <Logo label={t.header.homeLabel} />
-          <p className={styles.tagline}>{t.footer.tagline}</p>
           <a
             className={styles.backToTop}
             href="#home"
