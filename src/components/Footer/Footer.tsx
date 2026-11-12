@@ -32,20 +32,6 @@ export const Footer = () => {
             <li>
               <a
                 className={styles.social}
-                href={DEVELOPER.github.url}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`GitHub, ${t.contacts.opensInNewTab}`}
-              >
-                <BrandIcon
-                  brand="github"
-                  size={20}
-                />
-              </a>
-            </li>
-            <li>
-              <a
-                className={styles.social}
                 href={DEVELOPER.linkedin.url}
                 target="_blank"
                 rel="noreferrer"
@@ -53,6 +39,20 @@ export const Footer = () => {
               >
                 <BrandIcon
                   brand="linkedin"
+                  size={20}
+                />
+              </a>
+            </li>
+            <li>
+              <a
+                className={styles.social}
+                href={DEVELOPER.github.url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`GitHub, ${t.contacts.opensInNewTab}`}
+              >
+                <BrandIcon
+                  brand="github"
                   size={20}
                 />
               </a>
