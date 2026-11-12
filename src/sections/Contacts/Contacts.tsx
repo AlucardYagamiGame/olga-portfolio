@@ -44,7 +44,7 @@ export const Contacts = () => {
           <Reveal
             key={id}
             as="li"
-            delay={0.1 + index * 0.1}
+            delay={Number((0.1 + index * 0.1).toFixed(2))}
           >
             <a
               className={styles.card}
