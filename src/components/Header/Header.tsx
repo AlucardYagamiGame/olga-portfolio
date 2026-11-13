@@ -89,14 +89,6 @@ export const Header = () => {
               </li>
             ))}
           </ul>
-          <PillLink
-            className={styles.menuCta}
-            href="#contacts"
-            withArrow
-            onClick={close}
-          >
-            {t.header.cta}
-          </PillLink>
         </nav>
 
         <div
