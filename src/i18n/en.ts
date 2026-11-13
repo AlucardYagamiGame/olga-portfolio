@@ -22,7 +22,7 @@ export const en: Dictionary = {
     contacts: 'Contact',
   },
   hero: {
-    greeting: 'Hi, I’m Olga ·',
+    greeting: '',
     name: 'Olga Shcherbatiuk',
     roles: [
       'Full Stack Developer',
@@ -37,7 +37,7 @@ export const en: Dictionary = {
     photoAlt: 'Photo of Olga Shcherbatiuk',
     stats: [
       { value: '100%', label: 'Strict TypeScript' },
-      { value: 'FID < 1s', label: 'interaction delay target' },
+      { value: 'INP < 200ms', label: 'interaction delay target' },
       { value: 'Mobile-First', label: 'responsive layouts from 320px' },
     ],
     cards: {
@@ -92,6 +92,7 @@ export const en: Dictionary = {
     description: '',
     code: 'Code',
     personal: 'Personal version',
+    personalCode: 'Code PV',
     demo: 'Live demo',
     screenshotAlt: (title) => `Screenshot of ${title}`,
     items: {

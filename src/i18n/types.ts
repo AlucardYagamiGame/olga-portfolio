@@ -78,6 +78,7 @@ export interface Dictionary {
     description: string;
     code: string;
     personal: string;
+    personalCode: string;
     demo: string;
     screenshotAlt: (title: string) => string;
     items: Record<ProjectId, ProjectText>;
