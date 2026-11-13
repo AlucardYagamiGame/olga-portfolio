@@ -96,11 +96,9 @@ export interface Dictionary {
     opensInNewTab: string;
   };
   footer: {
-    tagline: string;
     backToTop: string;
     connect: string;
     rights: (year: number) => string;
-    madeWith: string;
-    love: string;
+    openForHire: string;
   };
 }

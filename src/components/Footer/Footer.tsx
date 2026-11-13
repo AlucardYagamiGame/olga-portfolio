@@ -1,4 +1,4 @@
-import { ArrowUp, Heart } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 
 import { BrandIcon } from '@/components/BrandIcon';
 import { DEVELOPER } from '@/constants';
@@ -77,16 +77,7 @@ export const Footer = () => {
 
       <div className={styles.bottom}>
         <p>{t.footer.rights(year)}</p>
-        <p className={styles.made}>
-          {t.footer.madeWith}
-          <Heart
-            className={styles.heart}
-            size={16}
-            fill="currentColor"
-            aria-hidden="true"
-          />
-          <span className="visually-hidden">{t.footer.love}</span>
-        </p>
+        <p className={styles.made}>{t.footer.openForHire}</p>
       </div>
     </footer>
   );
