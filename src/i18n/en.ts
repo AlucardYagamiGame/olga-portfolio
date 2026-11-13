@@ -84,13 +84,12 @@ export const en: Dictionary = {
     kicker: 'Skills & expertise',
     title: 'My tech stack',
     description:
-      'A typed React stack with a serverless backend: quick to start, cheap to run and easy to maintain.',
+      'A typed React ecosystem with serverless infrastructure: quick to launch, rock-solid in production, and simple to maintain.',
   },
   projects: {
     kicker: 'Portfolio',
     title: 'Featured projects',
-    description:
-      'Real products with real user flows, from a full online store to a landing page.',
+    description: '',
     code: 'Code',
     personal: 'Personal version',
     demo: 'Live demo',
@@ -142,12 +141,9 @@ export const en: Dictionary = {
     opensInNewTab: 'opens in a new tab',
   },
   footer: {
-    tagline:
-      'Typed, accessible and fast web apps on React, TypeScript and Supabase.',
     backToTop: 'Back to top',
     connect: 'Connect',
     rights: (year) => `© ${year} Olga Shcherbatiuk. All rights reserved.`,
-    madeWith: 'Made with React, TypeScript and',
-    love: 'love',
+    openForHire: 'Open for engineering opportunities',
   },
 };
