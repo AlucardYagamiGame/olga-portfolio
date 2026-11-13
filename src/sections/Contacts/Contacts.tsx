@@ -62,10 +62,6 @@ export const Contacts = () => {
                 <span className={styles.title}>
                   {t.contacts.items[id].title}
                 </span>
-                <span className={styles.subtitle}>
-                  {t.contacts.items[id].text}
-                </span>
-                <span className={styles.handle}>{DEVELOPER[id].handle}</span>
               </span>
               <span
                 className={styles.chevron}
