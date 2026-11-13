@@ -1,13 +1,31 @@
 @use '@/styles/mixins' as *;
+@use '@/styles/variables' as *;
 
+@keyframes decor-in {
+  from {
+    opacity: 0;
+    scale: 0.4;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+// Float uses the individual `translate`/`rotate` properties so it never
+// competes with the entrance (`opacity`/`scale`) or any `transform` set by
+// a parent or a utility class.
 @keyframes float-slow {
   0%,
   100% {
-    transform: translateY(0) rotate(0deg);
+    translate: 0 0;
+    rotate: 0deg;
   }
 
   50% {
-    transform: translateY(-10px) rotate(3deg);
+    translate: 0 -12px;
+    rotate: 4deg;
   }
 }
 
@@ -20,8 +38,10 @@
   pointer-events: none;
 
   @include motion {
-    animation: float-slow var(--float-duration, 5s) ease-in-out
-      var(--float-delay, 0s) infinite;
+    animation:
+      decor-in 0.9s $ease-reveal var(--enter-delay, 0s) both,
+      float-slow var(--float-duration, 5.5s) ease-in-out
+        calc(var(--enter-delay, 0s) + var(--float-delay, 0s)) infinite;
   }
 }
 
