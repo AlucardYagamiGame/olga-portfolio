@@ -137,6 +137,7 @@ export const ua: Dictionary = {
       linkedin: { title: 'LinkedIn', text: 'Напишіть мені напряму' },
       github: { title: 'GitHub', text: 'Код усіх моїх проєктів' },
       telegram: { title: 'Telegram', text: 'Напишіть мені в месенджері' },
+      email: { title: 'Email', text: 'Напишіть мені на пошту' },
     },
     opensInNewTab: 'відкривається в новій вкладці',
   },

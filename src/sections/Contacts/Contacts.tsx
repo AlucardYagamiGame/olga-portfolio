@@ -1,3 +1,5 @@
+import { Mail } from 'lucide-react';
+
 import { BrandIcon } from '@/components/BrandIcon';
 import { Decor } from '@/components/Decor';
 import { Reveal } from '@/components/Reveal';
@@ -8,8 +10,63 @@ import { useTranslation } from '@/hooks';
 import styles from './Contacts.module.scss';
 
 import type { ContactId } from '@/i18n';
+import type { ReactNode } from 'react';
 
-const CONTACTS: readonly ContactId[] = ['linkedin', 'github', 'telegram'];
+interface ContactLink {
+  id: ContactId;
+  href: string;
+  external: boolean;
+  icon: ReactNode;
+}
+
+const ICON_SIZE = 22;
+
+const CONTACTS: readonly ContactLink[] = [
+  {
+    id: 'linkedin',
+    href: DEVELOPER.linkedin.url,
+    external: true,
+    icon: (
+      <BrandIcon
+        brand="linkedin"
+        size={ICON_SIZE}
+      />
+    ),
+  },
+  {
+    id: 'github',
+    href: DEVELOPER.github.url,
+    external: true,
+    icon: (
+      <BrandIcon
+        brand="github"
+        size={ICON_SIZE}
+      />
+    ),
+  },
+  {
+    id: 'telegram',
+    href: DEVELOPER.telegram.url,
+    external: true,
+    icon: (
+      <BrandIcon
+        brand="telegram"
+        size={ICON_SIZE}
+      />
+    ),
+  },
+  {
+    id: 'email',
+    href: `mailto:${DEVELOPER.email}`,
+    external: false,
+    icon: (
+      <Mail
+        size={ICON_SIZE}
+        aria-hidden="true"
+      />
+    ),
+  },
+];
 
 export const Contacts = () => {
   const { t } = useTranslation();
@@ -40,7 +97,7 @@ export const Contacts = () => {
       </SectionHeading>
 
       <ul className={styles.list}>
-        {CONTACTS.map((id, index) => (
+        {CONTACTS.map(({ id, href, external, icon }, index) => (
           <Reveal
             key={id}
             as="li"
@@ -48,16 +105,13 @@ export const Contacts = () => {
           >
             <a
               className={styles.card}
-              href={DEVELOPER[id].url}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={href}
+              {...(external && {
+                target: '_blank',
+                rel: 'noopener noreferrer',
+              })}
             >
-              <span className={styles.icon}>
-                <BrandIcon
-                  brand={id}
-                  size={22}
-                />
-              </span>
+              <span className={styles.icon}>{icon}</span>
               <span className={styles.text}>
                 <span className={styles.title}>
                   {t.contacts.items[id].title}
@@ -69,9 +123,11 @@ export const Contacts = () => {
               >
                 ›
               </span>
-              <span className="visually-hidden">
-                {t.contacts.opensInNewTab}
-              </span>
+              {external && (
+                <span className="visually-hidden">
+                  {t.contacts.opensInNewTab}
+                </span>
+              )}
             </a>
           </Reveal>
         ))}

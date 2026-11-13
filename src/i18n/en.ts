@@ -137,6 +137,7 @@ export const en: Dictionary = {
       linkedin: { title: 'LinkedIn', text: 'Message me directly' },
       github: { title: 'GitHub', text: 'The code of all my projects' },
       telegram: { title: 'Telegram', text: 'Write me a message' },
+      email: { title: 'Email', text: 'Write me an email' },
     },
     opensInNewTab: 'opens in a new tab',
   },

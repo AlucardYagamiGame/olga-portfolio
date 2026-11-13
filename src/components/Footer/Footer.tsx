@@ -1,4 +1,4 @@
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, Mail } from 'lucide-react';
 
 import { BrandIcon } from '@/components/BrandIcon';
 import { DEVELOPER } from '@/constants';
@@ -39,7 +39,7 @@ export const Footer = () => {
               >
                 <BrandIcon
                   brand="linkedin"
-                  size={20}
+                  size={22}
                 />
               </a>
             </li>
@@ -53,7 +53,7 @@ export const Footer = () => {
               >
                 <BrandIcon
                   brand="github"
-                  size={20}
+                  size={22}
                 />
               </a>
             </li>
@@ -67,17 +67,34 @@ export const Footer = () => {
               >
                 <BrandIcon
                   brand="telegram"
-                  size={20}
+                  size={22}
                 />
               </a>
             </li>
           </ul>
+          <a
+            className={styles.email}
+            href={`mailto:${DEVELOPER.email}`}
+            aria-label={`Email ${DEVELOPER.email}`}
+          >
+            <span>{DEVELOPER.email}</span>
+            <Mail
+              size={16}
+              aria-hidden="true"
+            />
+          </a>
         </div>
       </div>
 
       <div className={styles.bottom}>
         <p>{t.footer.rights(year)}</p>
-        <p className={styles.made}>{t.footer.openForHire}</p>
+        <p className={styles.made}>
+          <span
+            className={styles.dot}
+            aria-hidden="true"
+          />
+          {t.footer.openForHire}
+        </p>
       </div>
     </footer>
   );
