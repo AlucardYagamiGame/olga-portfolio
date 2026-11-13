@@ -12,6 +12,7 @@
 
   @include on-tablet {
     gap: 104px;
+    padding: 32px 28px 64px;
   }
 
   @include on-phone {
