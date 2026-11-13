@@ -1,7 +1,6 @@
-import { ArrowUp, Heart } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 
 import { BrandIcon } from '@/components/BrandIcon';
-import { Logo } from '@/components/Logo';
 import { DEVELOPER } from '@/constants';
 import { useTranslation } from '@/hooks';
 
@@ -15,8 +14,6 @@ export const Footer = () => {
     <footer className={styles.footer}>
       <div className={styles.inner}>
         <div className={styles.brand}>
-          <Logo label={t.header.homeLabel} />
-          <p className={styles.tagline}>{t.footer.tagline}</p>
           <a
             className={styles.backToTop}
             href="#home"
@@ -35,20 +32,6 @@ export const Footer = () => {
             <li>
               <a
                 className={styles.social}
-                href={DEVELOPER.github.url}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`GitHub, ${t.contacts.opensInNewTab}`}
-              >
-                <BrandIcon
-                  brand="github"
-                  size={20}
-                />
-              </a>
-            </li>
-            <li>
-              <a
-                className={styles.social}
                 href={DEVELOPER.linkedin.url}
                 target="_blank"
                 rel="noreferrer"
@@ -56,6 +39,20 @@ export const Footer = () => {
               >
                 <BrandIcon
                   brand="linkedin"
+                  size={20}
+                />
+              </a>
+            </li>
+            <li>
+              <a
+                className={styles.social}
+                href={DEVELOPER.github.url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`GitHub, ${t.contacts.opensInNewTab}`}
+              >
+                <BrandIcon
+                  brand="github"
                   size={20}
                 />
               </a>
@@ -80,16 +77,7 @@ export const Footer = () => {
 
       <div className={styles.bottom}>
         <p>{t.footer.rights(year)}</p>
-        <p className={styles.made}>
-          {t.footer.madeWith}
-          <Heart
-            className={styles.heart}
-            size={16}
-            fill="currentColor"
-            aria-hidden="true"
-          />
-          <span className="visually-hidden">{t.footer.love}</span>
-        </p>
+        <p className={styles.made}>{t.footer.openForHire}</p>
       </div>
     </footer>
   );
