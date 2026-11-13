@@ -1,4 +1,5 @@
 export const DEVELOPER = {
+  email: 'olya.ivanthuk@gmail.com',
   github: {
     url: 'https://github.com/AlucardYagamiGame',
     handle: 'AlucardYagamiGame',

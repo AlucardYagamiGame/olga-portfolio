@@ -31,12 +31,15 @@
 
 .connect {
   display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-end;
   justify-self: end;
-  gap: 24px;
-  align-items: center;
+  min-width: 0;
 
   @include on-phone {
-    justify-self: center;
+    align-items: flex-start;
+    justify-self: start;
   }
 }
 
@@ -82,22 +85,70 @@
 }
 
 .heading {
-  @include kicker;
-
+  margin: 0;
+  color: var(--text-primary);
   font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+
+  @include on-phone {
+    font-size: 1.15rem;
+  }
 }
 
 .socials {
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
+
+  @include on-phone {
+    justify-content: flex-start;
+  }
 }
 
 .social {
   @include focus-ring;
-  @include icon-circle(42px);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--surface-border-strong);
+  border-radius: 50%;
+  background: var(--surface-solid);
+  color: var(--text-muted);
+  transition:
+    border-color $transition,
+    color $transition,
+    transform $transition;
 
   &:hover {
-    transform: translateY(-3px) scale(1.05);
+    border-color: var(--surface-border-hover);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+  }
+}
+
+.email {
+  @include focus-ring;
+
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+  transition: color $transition;
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    color: var(--text-primary);
   }
 }
 
@@ -126,9 +177,44 @@
 }
 
 .made {
+  --status-green: #22c55e;
+  --status-glow: rgb(34 197 94 / 55%);
+
   display: inline-flex;
-  gap: 6px;
+  gap: 8px;
   align-items: center;
+}
+
+:global(:root[data-theme='light']) .made {
+  --status-green: #16a34a;
+  --status-glow: rgb(22 163 74 / 45%);
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--status-green);
+  border-radius: 50%;
+  box-shadow: 0 0 6px 1px var(--status-glow);
+  animation: status-pulse 2.4s ease-in-out infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 4px 0 var(--status-glow);
+    opacity: 1;
+  }
+
+  50% {
+    box-shadow: 0 0 10px 3px var(--status-glow);
+    opacity: 0.75;
+  }
 }
 
 .heart {

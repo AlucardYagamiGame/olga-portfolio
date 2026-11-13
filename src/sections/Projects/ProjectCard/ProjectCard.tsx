@@ -1,4 +1,4 @@
-import { Check, UserRound } from 'lucide-react';
+import { Check, ChevronRight } from 'lucide-react';
 import { useRef, useSyncExternalStore } from 'react';
 
 import { BrandIcon } from '@/components/BrandIcon';
@@ -179,14 +179,31 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                 size={size}
                 variant="accent"
                 icon={
-                  <UserRound
+                  <ChevronRight
                     size={16}
+                    strokeWidth={2.5}
                     aria-hidden="true"
                   />
                 }
                 externalLabel={externalLabel}
               >
                 {t.projects.personal}
+              </PillLink>
+            )}
+            {project.personalCode && (
+              <PillLink
+                href={project.personalCode}
+                size={size}
+                variant="secondary"
+                icon={
+                  <BrandIcon
+                    brand="github"
+                    size={16}
+                  />
+                }
+                externalLabel={externalLabel}
+              >
+                {t.projects.personalCode}
               </PillLink>
             )}
           </div>

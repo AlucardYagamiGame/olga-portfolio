@@ -22,7 +22,7 @@ export const ua: Dictionary = {
     contacts: 'Контакти',
   },
   hero: {
-    greeting: 'Привіт, я Ольга ·',
+    greeting: '',
     name: 'Ольга Щербатюк',
     roles: [
       'Full Stack розробниця',
@@ -37,7 +37,7 @@ export const ua: Dictionary = {
     photoAlt: 'Фото Ольги Щербатюк',
     stats: [
       { value: '100%', label: 'Strict TypeScript' },
-      { value: 'FID < 1s', label: 'ціль за затримкою взаємодії' },
+      { value: 'INP < 200ms', label: 'ціль за затримкою взаємодії' },
       { value: 'Mobile-First', label: 'адаптив від 320px' },
     ],
     cards: {
@@ -92,6 +92,7 @@ export const ua: Dictionary = {
     description: '',
     code: 'Код',
     personal: 'Персональна версія',
+    personalCode: 'Code PV',
     demo: 'Демо',
     screenshotAlt: (title) => `Скріншот проєкту ${title}`,
     items: {
@@ -137,6 +138,7 @@ export const ua: Dictionary = {
       linkedin: { title: 'LinkedIn', text: 'Напишіть мені напряму' },
       github: { title: 'GitHub', text: 'Код усіх моїх проєктів' },
       telegram: { title: 'Telegram', text: 'Напишіть мені в месенджері' },
+      email: { title: 'Email', text: 'Напишіть мені на пошту' },
     },
     opensInNewTab: 'відкривається в новій вкладці',
   },

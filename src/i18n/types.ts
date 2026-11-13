@@ -8,7 +8,7 @@ export type FactId = 'conversion' | 'speed' | 'costs' | 'markets';
 
 export type HeroCardId = 'speed' | 'costs';
 
-export type ContactId = 'linkedin' | 'github' | 'telegram';
+export type ContactId = 'linkedin' | 'github' | 'telegram' | 'email';
 
 export interface QuickFact {
   title: string;
@@ -78,6 +78,7 @@ export interface Dictionary {
     description: string;
     code: string;
     personal: string;
+    personalCode: string;
     demo: string;
     screenshotAlt: (title: string) => string;
     items: Record<ProjectId, ProjectText>;

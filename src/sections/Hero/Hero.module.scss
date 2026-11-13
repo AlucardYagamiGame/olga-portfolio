@@ -184,7 +184,9 @@
   z-index: 1;
   top: -22px;
   left: -26px;
-  --float-delay: 0.3s;
+  --enter-delay: 0.7s;
+  --float-duration: 5.5s;
+  --float-delay: 0s;
 
   @include on-phone {
     top: -18px;
@@ -198,8 +200,9 @@
   z-index: 1;
   right: -34px;
   bottom: 4px;
-  --float-duration: 4.5s;
-  --float-delay: 1s;
+  --enter-delay: 0.9s;
+  --float-duration: 6s;
+  --float-delay: 0.8s;
 
   @include on-phone {
     right: -6px;
@@ -268,7 +271,7 @@
 .stats {
   display: flex;
   flex-wrap: wrap;
-  row-gap: 20px;
+  row-gap: 16px;
 
   @include on-tablet {
     justify-content: center;
@@ -284,8 +287,8 @@
 .stat {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 0 24px;
+  gap: 4px;
+  padding: 0 20px;
   border-left: 1px solid var(--divider);
 
   &:first-child {
@@ -295,10 +298,10 @@
 
   @include on-phone {
     align-items: center;
-    padding: 0 8px;
+    padding: 0 6px;
 
     &:first-child {
-      padding-left: 8px;
+      padding-left: 6px;
     }
   }
 }
@@ -307,26 +310,26 @@
   @include display-font;
 
   color: var(--text-strong);
-  font-size: 2rem;
+  font-size: 1.65rem;
   font-weight: var(--display-weight);
   letter-spacing: -0.04em;
   line-height: 1;
   white-space: nowrap;
 
   @include on-phone {
-    font-size: clamp(0.9rem, 4.6vw, 1.5rem);
+    font-size: clamp(0.85rem, 4.1vw, 1.25rem);
     letter-spacing: -0.03em;
   }
 }
 
 .statLabel {
-  max-width: 130px;
+  max-width: 120px;
   color: var(--text-muted);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   line-height: 1.35;
 
   @include on-phone {
-    font-size: 0.74rem;
+    font-size: 0.7rem;
   }
 }
 
