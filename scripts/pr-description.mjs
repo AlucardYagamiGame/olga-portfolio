@@ -14,6 +14,8 @@ const TYPES = [
   ['refactor', 'Refactoring'],
   ['style', 'Styling'],
   ['docs', 'Docs'],
+  ['ci', 'CI'],
+  ['build', 'Build'],
   ['chore', 'Chores'],
 ];
 
