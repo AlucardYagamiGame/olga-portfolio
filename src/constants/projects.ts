@@ -17,6 +17,7 @@ export interface Project {
   personalCode?: string;
   personal?: string;
   featured?: boolean;
+  released: string;
 }
 
 export const PROJECTS: readonly Project[] = [
@@ -40,6 +41,7 @@ export const PROJECTS: readonly Project[] = [
     personal: 'https://gadgets-catalog-swart.vercel.app/developer',
     personalCode: 'https://github.com/AlucardYagamiGame/gadgets-catalog',
     featured: true,
+    released: '2026-11',
   },
   {
     id: 'todoApp',
@@ -50,6 +52,7 @@ export const PROJECTS: readonly Project[] = [
     tags: ['React', 'TypeScript', 'REST API', 'Bulma', 'Cypress'],
     code: 'https://github.com/AlucardYagamiGame/todo-app-with-api',
     demo: 'https://alucardyagamigame.github.io/todo-app-with-api/',
+    released: '2026-10',
   },
   {
     id: 'bikeLanding',
@@ -59,5 +62,6 @@ export const PROJECTS: readonly Project[] = [
     tags: ['HTML5', 'SCSS', 'BEM', 'Figma'],
     code: 'https://github.com/AlucardYagamiGame/bike-landing-page',
     demo: 'https://alucardyagamigame.github.io/bike-landing-page/',
+    released: '2026-07',
   },
 ];

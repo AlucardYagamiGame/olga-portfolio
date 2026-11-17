@@ -51,9 +51,16 @@
 
 .frameBar {
   display: flex;
-  gap: 5px;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
   padding: 8px 10px;
   border-bottom: 1px solid var(--surface-border);
+}
+
+.dots {
+  display: flex;
+  gap: 5px;
 
   span {
     width: 7px;
@@ -61,6 +68,15 @@
     border-radius: 50%;
     background: var(--divider);
   }
+}
+
+.released {
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
 .image {
@@ -286,7 +302,7 @@
       border-bottom-color: rgba(0, 0, 0, 0.06);
       background: #fafafb;
 
-      span {
+      .dots span {
         background: rgba(0, 0, 0, 0.12);
       }
     }
