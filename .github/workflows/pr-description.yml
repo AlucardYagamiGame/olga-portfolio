@@ -1,0 +1,35 @@
+name: PR description
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  describe:
+    name: Fill PR title and description from commits
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate title and body
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: node scripts/pr-description.mjs "$BASE_SHA" "$HEAD_SHA" > pr.json
+
+      - name: Update the pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          title=$(jq -r .title pr.json)
+          jq -r .body pr.json > body.md
+          gh pr edit "$PR_NUMBER" --title "$title" --body-file body.md

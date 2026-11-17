@@ -12,6 +12,7 @@ import type { Project } from '@/constants';
 import type { MouseEvent } from 'react';
 
 const MAX_TILT = 6;
+const LOCALES = { en: 'en-US', ua: 'uk-UA' } as const;
 const DESKTOP_QUERY = '(min-width: 1100px)';
 
 const subscribeDesktop = (onChange: () => void) => {
@@ -30,7 +31,7 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard = ({ project }: ProjectCardProps) => {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const { theme } = useTheme();
   const cardRef = useRef<HTMLElement>(null);
   const text = t.projects.items[project.id];
@@ -49,6 +50,11 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       {text.description}
     </p>
   );
+  const releasedLabel = new Intl.DateTimeFormat(LOCALES[language], {
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(`${project.released}-01`));
   const size = project.featured ? 'md' : 'sm';
 
   const handleMove = (event: MouseEvent<HTMLElement>) => {
@@ -87,13 +93,21 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       >
         <div className={styles.media}>
           <div className={styles.frame}>
-            <span
-              className={styles.frameBar}
-              aria-hidden="true"
-            >
-              <span />
-              <span />
-              <span />
+            <span className={styles.frameBar}>
+              <span
+                className={styles.dots}
+                aria-hidden="true"
+              >
+                <span />
+                <span />
+                <span />
+              </span>
+              <time
+                className={styles.released}
+                dateTime={project.released}
+              >
+                {releasedLabel}
+              </time>
             </span>
             <img
               className={styles.image}
