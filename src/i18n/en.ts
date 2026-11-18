@@ -84,7 +84,7 @@ export const en: Dictionary = {
     kicker: 'Skills & expertise',
     title: 'My tech stack',
     description:
-      'A typed React ecosystem with serverless infrastructure: quick to launch, rock-solid in production, and simple to maintain.',
+      'Full-stack web development with React, TypeScript, and Supabase: clean architecture, automated workflows, and responsive design.',
   },
   projects: {
     kicker: 'Portfolio',
