@@ -1,22 +1,12 @@
 <!-- auto-pr:start -->
 <!-- auto-pr:end -->
 
-## Що змінено
+## Notes
 
-### Нове
+<!-- Optional: context for the reviewer. Delete this section if empty. -->
 
--
-
-### Виправлення
-
--
-
-### CI
-
--
-
-## Перевірка
+## Checklist
 
 - [ ] `npm run check` (typecheck, lint, format, build)
-- [ ] Перевірено на мобільній ширині (~360px), у темній і світлій темах
-- [ ] Перевірено EN/UA
+- [ ] Checked at mobile width (~360px) in dark and light themes
+- [ ] Checked EN/UA
