@@ -2,7 +2,9 @@
 @use '@/styles/mixins' as *;
 
 .card {
+  position: relative;
   display: flex;
+  overflow: hidden;
   flex-direction: column;
   gap: 12px;
   align-items: center;
@@ -60,4 +62,30 @@
   margin-bottom: 6px;
   color: var(--text-secondary);
   font-size: 0.9rem;
+}
+
+.beam {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle 160px at var(--glare-x, 50%) var(--glare-y, 50%),
+    var(--beam-a),
+    var(--beam-b) 68%,
+    color-mix(in srgb, var(--beam-c) 45%, transparent) 92%,
+    transparent
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity $transition;
+}
+
+.card:hover .beam {
+  opacity: 1;
 }

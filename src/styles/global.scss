@@ -1,5 +1,6 @@
 @use 'variables' as *;
 @use 'mixins' as *;
+@use 'fonts';
 
 :root {
   --font-display: 'DM Sans', system-ui, sans-serif;
@@ -101,6 +102,9 @@
   --dot-color: #9ff0ec;
   --dot-glow: rgba(159, 240, 236, 0.7);
   --glare-color: rgba(255, 255, 255, 0.06);
+  --beam-a: #38bdf8;
+  --beam-b: #c084fc;
+  --beam-c: #f472b6;
 
   --mouse-x: -1000px;
   --mouse-y: -1000px;
@@ -196,6 +200,9 @@
   --dot-color: #786ef1;
   --dot-glow: rgba(120, 110, 241, 0.5);
   --glare-color: transparent;
+  --beam-a: #38bdf8;
+  --beam-b: #c084fc;
+  --beam-c: #f472b6;
 
   color-scheme: light;
 }

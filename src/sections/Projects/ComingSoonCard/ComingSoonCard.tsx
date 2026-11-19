@@ -7,14 +7,31 @@ import { useTranslation } from '@/hooks';
 
 import styles from './ComingSoonCard.module.scss';
 
+import type { MouseEvent } from 'react';
+
 export const ComingSoonCard = () => {
   const { t } = useTranslation();
   const { badge, title, text, link } = t.projects.comingSoon;
+
+  const handleMove = (event: MouseEvent<HTMLElement>) => {
+    const card = event.currentTarget;
+    const rect = card.getBoundingClientRect();
+
+    card.style.setProperty(
+      '--glare-x',
+      `${((event.clientX - rect.left) / rect.width) * 100}%`,
+    );
+    card.style.setProperty(
+      '--glare-y',
+      `${((event.clientY - rect.top) / rect.height) * 100}%`,
+    );
+  };
 
   return (
     <article
       className={styles.card}
       aria-labelledby="coming-soon-title"
+      onMouseMove={handleMove}
     >
       <span className={styles.iconWrap}>
         <span className={styles.icon}>
@@ -46,6 +63,10 @@ export const ComingSoonCard = () => {
       >
         {link}
       </PillLink>
+      <span
+        className={styles.beam}
+        aria-hidden="true"
+      />
     </article>
   );
 };

@@ -2,12 +2,16 @@ import { useEffect, useRef } from 'react';
 
 import { useTheme } from '@/hooks';
 
-import { makeLightImage } from './lightPortrait';
+import { PORTRAIT, SIZE, preloadPortrait } from './images';
 import styles from './ParticlePortrait.module.scss';
-import { SIZE, loadSilhouette } from './silhouette';
+import { SPAWN } from './spawn';
 
 /** Many small particles give the fine, detailed grain of the reference. */
-const COUNT = 760;
+const COUNT = 420;
+
+/** Phones get fewer particles and a lower canvas resolution. */
+const COUNT_PHONE = 200;
+const PHONE_QUERY = '(max-width: 639px)';
 
 /**
  * The particle canvas is larger than the portrait, so particles can rise
@@ -23,6 +27,9 @@ const MIN_X = 320;
 /** Spark zone on the photo (px): colours run along its height. */
 const TOP = 60;
 const BOTTOM = 500;
+
+/** Set once the particles have run, so a theme switch restarts them at once. */
+let warmedUp = false;
 
 type Rgb = readonly [number, number, number];
 
@@ -113,9 +120,10 @@ export const EmberLayer = () => {
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const additive = theme === 'dark';
-    let spawn: number[] = [];
+    const spawn = SPAWN;
+    const phone = window.matchMedia(PHONE_QUERY).matches;
     let particles: Particle[] = [];
-    let body: HTMLCanvasElement | null = null;
+    let body: HTMLImageElement | null = null;
     let scale = 1;
     let last = 0;
     let frameId = 0;
@@ -227,7 +235,7 @@ export const EmberLayer = () => {
 
     const resize = () => {
       const { width } = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, phone ? 1.5 : 2);
 
       canvas.width = Math.max(1, Math.round(width * dpr));
       canvas.height = canvas.width;
@@ -244,40 +252,78 @@ export const EmberLayer = () => {
     visibility.observe(canvas);
     resize();
 
-    loadSilhouette()
-      .then((silhouette) => {
-        if (cancelled || silhouette.spawn.length === 0) {
-          return;
-        }
+    let wanted = false;
 
-        spawn = silhouette.spawn;
+    const begin = () => {
+      // Light theme: wait for the mask, or particles would flash over the face.
+      if (cancelled || !wanted || (!additive && !body)) {
+        return;
+      }
 
-        if (!additive) {
-          // Light theme: the portrait fades out at the bottom, so particles
-          // behind it would show through. Hide everything behind the figure.
-          const light = makeLightImage(silhouette.image);
-          const mask = document.createElement('canvas');
+      wanted = false;
+      warmedUp = true;
+      particles = Array.from({ length: phone ? COUNT_PHONE : COUNT }, () => {
+        const particle = {} as Particle;
 
-          mask.width = light.width;
-          mask.height = light.height;
-          mask.getContext('2d')?.putImageData(light, 0, 0);
-          body = mask;
-        }
+        reset(particle, true);
 
-        particles = Array.from({ length: COUNT }, () => {
-          const particle = {} as Particle;
+        return particle;
+      });
+      sync();
+    };
 
-          reset(particle, true);
+    const start = () => {
+      wanted = true;
+      begin();
+      // Fetch the other theme's portrait now, so a later switch is instant.
+      preloadPortrait(additive ? 'light' : 'dark');
+    };
 
-          return particle;
-        });
-        sync();
-      })
-      .catch(() => undefined);
+    // The particles are decoration: on the first run start them only once the
+    // page has loaded and the browser is idle, so they never compete with
+    // first paint. After that (a theme switch) start without any wait.
+    let cancelIdle = () => {};
+
+    const whenIdle = () => {
+      if (typeof window.requestIdleCallback === 'function') {
+        const id = window.requestIdleCallback(start, { timeout: 2000 });
+
+        cancelIdle = () => window.cancelIdleCallback(id);
+      } else {
+        const id = window.setTimeout(start, 400);
+
+        cancelIdle = () => window.clearTimeout(id);
+      }
+    };
+
+    const onLoad = () => whenIdle();
+
+    if (!additive) {
+      // Light theme: the portrait fades out at the bottom, so particles
+      // behind it would show through. Hide everything behind the figure by
+      // drawing the prepared light portrait over them (destination-out).
+      const mask = new Image();
+
+      mask.onload = () => {
+        body = mask;
+        begin();
+      };
+      mask.src = PORTRAIT.light.small;
+    }
+
+    if (warmedUp) {
+      start();
+    } else if (document.readyState === 'complete') {
+      whenIdle();
+    } else {
+      window.addEventListener('load', onLoad, { once: true });
+    }
 
     return () => {
       cancelled = true;
       running = false;
+      cancelIdle();
+      window.removeEventListener('load', onLoad);
       cancelAnimationFrame(frameId);
       resizeObserver.disconnect();
       visibility.disconnect();
