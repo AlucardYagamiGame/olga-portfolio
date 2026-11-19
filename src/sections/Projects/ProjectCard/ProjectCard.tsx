@@ -227,6 +227,10 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
           className={styles.glare}
           aria-hidden="true"
         />
+        <span
+          className={styles.beam}
+          aria-hidden="true"
+        />
       </article>
     </div>
   );
