@@ -1,5 +1,6 @@
 @use 'variables' as *;
 @use 'mixins' as *;
+@use 'fonts';
 
 :root {
   --font-display: 'DM Sans', system-ui, sans-serif;

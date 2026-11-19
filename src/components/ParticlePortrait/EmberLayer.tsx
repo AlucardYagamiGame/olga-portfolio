@@ -2,12 +2,16 @@ import { useEffect, useRef } from 'react';
 
 import { useTheme } from '@/hooks';
 
-import { makeLightImage } from './lightPortrait';
+import { PORTRAIT, SIZE } from './images';
 import styles from './ParticlePortrait.module.scss';
-import { SIZE, loadSilhouette } from './silhouette';
+import { SPAWN } from './spawn';
 
 /** Many small particles give the fine, detailed grain of the reference. */
-const COUNT = 760;
+const COUNT = 420;
+
+/** Phones get fewer particles and a lower canvas resolution. */
+const COUNT_PHONE = 200;
+const PHONE_QUERY = '(max-width: 639px)';
 
 /**
  * The particle canvas is larger than the portrait, so particles can rise
@@ -113,9 +117,10 @@ export const EmberLayer = () => {
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const additive = theme === 'dark';
-    let spawn: number[] = [];
+    const spawn = SPAWN;
+    const phone = window.matchMedia(PHONE_QUERY).matches;
     let particles: Particle[] = [];
-    let body: HTMLCanvasElement | null = null;
+    let body: HTMLImageElement | null = null;
     let scale = 1;
     let last = 0;
     let frameId = 0;
@@ -227,7 +232,7 @@ export const EmberLayer = () => {
 
     const resize = () => {
       const { width } = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, phone ? 1.5 : 2);
 
       canvas.width = Math.max(1, Math.round(width * dpr));
       canvas.height = canvas.width;
@@ -244,40 +249,62 @@ export const EmberLayer = () => {
     visibility.observe(canvas);
     resize();
 
-    loadSilhouette()
-      .then((silhouette) => {
-        if (cancelled || silhouette.spawn.length === 0) {
-          return;
-        }
+    const start = () => {
+      if (cancelled) {
+        return;
+      }
 
-        spawn = silhouette.spawn;
+      particles = Array.from({ length: phone ? COUNT_PHONE : COUNT }, () => {
+        const particle = {} as Particle;
 
-        if (!additive) {
-          // Light theme: the portrait fades out at the bottom, so particles
-          // behind it would show through. Hide everything behind the figure.
-          const light = makeLightImage(silhouette.image);
-          const mask = document.createElement('canvas');
+        reset(particle, true);
 
-          mask.width = light.width;
-          mask.height = light.height;
-          mask.getContext('2d')?.putImageData(light, 0, 0);
-          body = mask;
-        }
+        return particle;
+      });
+      sync();
+    };
 
-        particles = Array.from({ length: COUNT }, () => {
-          const particle = {} as Particle;
+    // The particles are decoration: start them only once the page has
+    // loaded and the browser is idle, so they never compete with first paint.
+    let cancelIdle = () => {};
 
-          reset(particle, true);
+    const whenIdle = () => {
+      if (typeof window.requestIdleCallback === 'function') {
+        const id = window.requestIdleCallback(start, { timeout: 2000 });
 
-          return particle;
-        });
-        sync();
-      })
-      .catch(() => undefined);
+        cancelIdle = () => window.cancelIdleCallback(id);
+      } else {
+        const id = window.setTimeout(start, 400);
+
+        cancelIdle = () => window.clearTimeout(id);
+      }
+    };
+
+    const onLoad = () => whenIdle();
+
+    if (!additive) {
+      // Light theme: the portrait fades out at the bottom, so particles
+      // behind it would show through. Hide everything behind the figure by
+      // drawing the prepared light portrait over them (destination-out).
+      const mask = new Image();
+
+      mask.onload = () => {
+        body = mask;
+      };
+      mask.src = PORTRAIT.light.small;
+    }
+
+    if (document.readyState === 'complete') {
+      whenIdle();
+    } else {
+      window.addEventListener('load', onLoad, { once: true });
+    }
 
     return () => {
       cancelled = true;
       running = false;
+      cancelIdle();
+      window.removeEventListener('load', onLoad);
       cancelAnimationFrame(frameId);
       resizeObserver.disconnect();
       visibility.disconnect();

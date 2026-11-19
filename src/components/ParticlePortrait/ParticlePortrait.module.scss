@@ -19,10 +19,17 @@
 // would be painted over them and wash them out.
 .shadow {
   z-index: 0;
+  background: #7c3aed;
   opacity: 0.2;
   filter: blur(22px);
   transform: translateY(2%);
-  mask-image: linear-gradient(to bottom, black 65%, transparent 98%);
+  mask-image:
+    var(--shadow-shape), linear-gradient(to bottom, black 65%, transparent 98%);
+  mask-size:
+    100% 100%,
+    100% 100%;
+  mask-repeat: no-repeat;
+  mask-composite: intersect;
   pointer-events: none;
 }
 
@@ -40,6 +47,7 @@
 // Layer 3 (front): the still portrait on a transparent background.
 .portrait {
   z-index: 2;
+  object-fit: contain;
 
   // Dissolve the bottom edge instead of cutting it.
   mask-image: linear-gradient(to bottom, black 70%, transparent 100%);

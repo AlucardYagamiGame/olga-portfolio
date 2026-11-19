@@ -20,17 +20,18 @@
       href="/favicon.svg"
     />
     <link
-      rel="preconnect"
-      href="https://fonts.googleapis.com"
-    />
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
+      rel="preload"
+      href="/fonts/dm-sans-latin-opsz-normal.woff2"
+      as="font"
+      type="font/woff2"
       crossorigin
     />
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300..600&display=swap"
+      rel="preload"
+      href="/fonts/inter-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
     <title>Olga Shcherbatiuk | Full Stack Developer</title>
     <script>
@@ -48,6 +49,23 @@
             : 'dark';
         }
         document.documentElement.dataset.theme = theme;
+
+        // Start fetching the hero portrait for this theme before the app
+        // script runs. Keep the sizes in sync with PORTRAIT_SIZES.
+        var preload = document.createElement('link');
+        preload.rel = 'preload';
+        preload.as = 'image';
+        preload.href = '/portrait/' + theme + '-800.webp';
+        preload.setAttribute(
+          'imagesrcset',
+          '/portrait/' +
+            theme +
+            '-480.webp 480w, /portrait/' +
+            theme +
+            '-800.webp 800w',
+        );
+        preload.setAttribute('imagesizes', '(max-width: 639px) 80vw, 640px');
+        document.head.appendChild(preload);
       })();
     </script>
   </head>
