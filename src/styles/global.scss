@@ -109,9 +109,11 @@
 }
 
 :root[data-theme='light'] {
-  --font-body: 'DM Sans', system-ui, sans-serif;
-  --display-weight: 500;
-  --title-weight: 500;
+  // Typography is the same as in the dark theme (same fonts and weights), so
+  // text keeps the same width and position when the theme is switched.
+  --font-body: 'Inter', system-ui, sans-serif;
+  --display-weight: 380;
+  --title-weight: 420;
 
   --bg-main: #f5f5f5;
   --bg-main-rgb: 245, 245, 245;
