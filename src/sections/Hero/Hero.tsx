@@ -1,8 +1,9 @@
 import { Cloud, Zap } from 'lucide-react';
 import { TypeAnimation } from 'react-type-animation';
 
-import avatar from '@/assets/avatar.webp';
+// import avatar from '@/assets/avatar.webp'; // original photo, kept for reference
 import { Decor } from '@/components/Decor';
+import { ParticlePortrait } from '@/components/ParticlePortrait';
 import { PillLink } from '@/components/PillLink';
 import { RichText } from '@/components/RichText';
 import { useTranslation } from '@/hooks';
@@ -32,7 +33,7 @@ const CARDS: readonly { id: HeroCardId; icon: LucideIcon }[] = [
   { id: 'costs', icon: Cloud },
 ];
 
-const SLABS = [0, 1, 2];
+// const SLABS = [0, 1, 2]; // used by the commented-out glass slabs
 
 const delay = (seconds: number) => ({ '--d': `${seconds}s` }) as CSSProperties;
 
@@ -154,10 +155,13 @@ export const Hero = () => {
           className={`${styles.artwork} ${styles.fadeIn}`}
           style={delay(0.4)}
         >
+          {/* Violet haze behind the artwork, commented out:
           <div
             className={styles.glow}
             aria-hidden="true"
           />
+          */}
+          {/* Glass slabs behind the photo, commented out so the particle portrait stands on its own:
           <div
             className={styles.slabs}
             aria-hidden="true"
@@ -170,6 +174,8 @@ export const Hero = () => {
               />
             ))}
           </div>
+          */}
+          {/* Original photo, commented out in favour of the particle portrait:
           <div className={styles.photoFrame}>
             <img
               className={styles.photo}
@@ -178,6 +184,10 @@ export const Hero = () => {
               width={640}
               height={640}
             />
+          </div>
+          */}
+          <div className={styles.portrait}>
+            <ParticlePortrait label={t.hero.photoAlt} />
           </div>
           <Decor
             shape="sparkle"

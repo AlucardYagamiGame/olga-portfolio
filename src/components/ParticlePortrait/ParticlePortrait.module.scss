@@ -1,0 +1,51 @@
+.stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+// Layer order, back to front: shadow (light theme only), particles, portrait.
+
+// Layer 1 (back): the soft violet depth under the portrait, light theme only.
+// It lives below the particles on purpose: as a drop-shadow on the portrait it
+// would be painted over them and wash them out.
+.shadow {
+  z-index: 0;
+  opacity: 0.2;
+  filter: blur(22px);
+  transform: translateY(2%);
+  mask-image: linear-gradient(to bottom, black 65%, transparent 98%);
+  pointer-events: none;
+}
+
+// Layer 2: particles behind the portrait. It is larger than the portrait, so
+// they can rise above it and beyond its right edge without being cut off.
+// Keep the size and offset in sync with REACH, PAD_X and PAD_Y in EmberLayer.
+.ember {
+  inset: -30% auto auto -10%;
+  z-index: 1;
+  width: 140%;
+  height: 140%;
+  pointer-events: none;
+}
+
+// Layer 3 (front): the still portrait on a transparent background.
+.portrait {
+  z-index: 2;
+
+  // Dissolve the bottom edge instead of cutting it.
+  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+
+  // Light theme: a longer, cleaner fade.
+  :global(:root[data-theme='light']) & {
+    mask-image: linear-gradient(to bottom, black 65%, transparent 98%);
+  }
+}

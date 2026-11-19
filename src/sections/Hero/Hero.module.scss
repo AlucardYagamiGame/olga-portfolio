@@ -413,6 +413,15 @@
   object-position: 55% 30%;
 }
 
+.portrait {
+  position: absolute;
+  z-index: 2;
+  top: 11%;
+  left: 2%;
+  width: 96%;
+  aspect-ratio: 1;
+}
+
 .sparkleLarge {
   z-index: 3;
   top: 2%;
