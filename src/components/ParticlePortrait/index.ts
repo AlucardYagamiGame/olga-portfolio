@@ -1,0 +1,1 @@
+export { ParticlePortrait } from './ParticlePortrait';

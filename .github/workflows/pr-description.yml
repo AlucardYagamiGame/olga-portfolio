@@ -21,6 +21,7 @@ jobs:
       - name: Generate title and body
         env:
           PR_BODY: ${{ github.event.pull_request.body }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: node scripts/pr-description.mjs "$BASE_SHA" "$HEAD_SHA" > pr.json
@@ -30,6 +31,10 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
+          if [ "$(jq -r '.skip // false' pr.json)" = "true" ]; then
+            echo "No commits to describe, skipping."
+            exit 0
+          fi
           title=$(jq -r .title pr.json)
           jq -r .body pr.json > body.md
           gh pr edit "$PR_NUMBER" --title "$title" --body-file body.md

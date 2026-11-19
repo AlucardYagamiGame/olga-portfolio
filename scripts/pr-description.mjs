@@ -70,7 +70,36 @@ const buildTitle = (commits) => {
     : title;
 };
 
-const buildBlock = (commits) => {
+const AREAS = [
+  ['src/components/', 'Components'],
+  ['src/sections/', 'Sections'],
+  ['src/i18n/', 'i18n'],
+  ['src/styles/', 'Styles'],
+  ['src/constants/', 'Content'],
+  ['src/hooks/', 'Hooks'],
+  ['.github/', 'CI'],
+  ['scripts/', 'Scripts'],
+];
+
+const analyzeFiles = (files) => {
+  const areas = AREAS.filter(([prefix]) =>
+    files.some((file) => file.startsWith(prefix)),
+  ).map(([, label]) => label);
+  const warnings = [];
+  const hasEn = files.includes('src/i18n/en.ts');
+  const hasUa = files.includes('src/i18n/ua.ts');
+
+  if (hasEn !== hasUa) {
+    warnings.push(
+      `\`${hasEn ? 'ua.ts' : 'en.ts'}\` was not changed, check that EN and UA stay in sync`,
+    );
+  }
+
+  return { areas, warnings };
+};
+
+const buildBlock = (commits, title, files, stat) => {
+  const { areas, warnings } = analyzeFiles(files);
   const sections = TYPES.map(([type, label]) => {
     const items = commits.filter((commit) => commit.type === type);
 
@@ -85,7 +114,32 @@ const buildBlock = (commits) => {
     return `### ${label}\n\n${lines.join('\n')}`;
   }).filter(Boolean);
 
-  return [START, '## Summary', '', sections.join('\n\n'), END].join('\n');
+  const meta = [
+    `**Changed:** ${stat}`,
+    areas.length > 0 ? `**Areas:** ${areas.join(', ')}` : '',
+    ...warnings.map((warning) => `> ⚠️ ${warning}`),
+  ].filter(Boolean);
+
+  return [
+    START,
+    `<!-- auto-title: ${title} -->`,
+    '## Summary',
+    '',
+    sections.join('\n\n'),
+    '',
+    meta.join('\n\n'),
+    END,
+  ].join('\n');
+};
+
+const isAutoTitle = (current, body) => {
+  const match = /<!-- auto-title: (.*) -->/.exec(body);
+
+  if (match) {
+    return current === match[1];
+  }
+
+  return !current || !PATTERN.test(current);
 };
 
 const mergeBody = (current, block) => {
@@ -107,14 +161,35 @@ const run = () => {
     process.exit(1);
   }
 
-  const log = execFileSync(
-    'git',
-    ['log', '--no-merges', '--reverse', '--format=%s', `${base}..${head}`],
-    { encoding: 'utf8' },
+  const git = (...args) => execFileSync('git', args, { encoding: 'utf8' });
+  const log = git(
+    'log',
+    '--no-merges',
+    '--reverse',
+    '--format=%s',
+    `${base}..${head}`,
   );
   const commits = log.split('\n').filter(Boolean).map(parseCommit);
-  const title = buildTitle(commits);
-  const body = mergeBody(process.env.PR_BODY ?? '', buildBlock(commits));
+
+  if (commits.length === 0) {
+    process.stdout.write(JSON.stringify({ skip: true }));
+
+    return;
+  }
+
+  const files = git('diff', '--name-only', `${base}...${head}`)
+    .split('\n')
+    .filter(Boolean);
+  const stat = git('diff', '--shortstat', `${base}...${head}`).trim();
+  const currentBody = process.env.PR_BODY ?? '';
+  const currentTitle = process.env.PR_TITLE ?? '';
+  const autoTitle = buildTitle(commits);
+  const keepTitle = !isAutoTitle(currentTitle, currentBody);
+  const title = keepTitle ? currentTitle : autoTitle;
+  const body = mergeBody(
+    currentBody,
+    buildBlock(commits, keepTitle ? '' : autoTitle, files, stat),
+  );
 
   process.stdout.write(JSON.stringify({ title, body }));
 };
