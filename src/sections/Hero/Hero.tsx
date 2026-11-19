@@ -138,11 +138,11 @@ export const Hero = () => {
           </div>
 
           <ul className={styles.stats}>
-            {t.hero.stats.map(({ value, label }, index) => (
+            {t.hero.stats.map(({ value, label }) => (
               <li
-                key={label}
+                key={value}
                 className={`${styles.stat} ${styles.enter}`}
-                style={delay(1.1 + index * 0.1)}
+                style={delay(1.1)}
               >
                 <span className={styles.statValue}>{value}</span>
                 <span className={styles.statLabel}>{label}</span>
