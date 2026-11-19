@@ -26,3 +26,12 @@ export const PORTRAIT: Record<
 
 /** Keep in sync with the preload link in index.html. */
 export const PORTRAIT_SIZES = '(max-width: 639px) 80vw, 640px';
+
+/** Warms the browser cache with a theme's portrait, matching the img's srcset. */
+export const preloadPortrait = (theme: Theme) => {
+  const image = new Image();
+
+  image.sizes = PORTRAIT_SIZES;
+  image.srcset = PORTRAIT[theme].srcSet;
+  image.src = PORTRAIT[theme].large;
+};

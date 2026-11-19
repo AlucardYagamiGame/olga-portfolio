@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import { useTheme } from '@/hooks';
 
-import { PORTRAIT, SIZE } from './images';
+import { PORTRAIT, SIZE, preloadPortrait } from './images';
 import styles from './ParticlePortrait.module.scss';
 import { SPAWN } from './spawn';
 
@@ -27,6 +27,9 @@ const MIN_X = 320;
 /** Spark zone on the photo (px): colours run along its height. */
 const TOP = 60;
 const BOTTOM = 500;
+
+/** Set once the particles have run, so a theme switch restarts them at once. */
+let warmedUp = false;
 
 type Rgb = readonly [number, number, number];
 
@@ -249,11 +252,16 @@ export const EmberLayer = () => {
     visibility.observe(canvas);
     resize();
 
-    const start = () => {
-      if (cancelled) {
+    let wanted = false;
+
+    const begin = () => {
+      // Light theme: wait for the mask, or particles would flash over the face.
+      if (cancelled || !wanted || (!additive && !body)) {
         return;
       }
 
+      wanted = false;
+      warmedUp = true;
       particles = Array.from({ length: phone ? COUNT_PHONE : COUNT }, () => {
         const particle = {} as Particle;
 
@@ -264,8 +272,16 @@ export const EmberLayer = () => {
       sync();
     };
 
-    // The particles are decoration: start them only once the page has
-    // loaded and the browser is idle, so they never compete with first paint.
+    const start = () => {
+      wanted = true;
+      begin();
+      // Fetch the other theme's portrait now, so a later switch is instant.
+      preloadPortrait(additive ? 'light' : 'dark');
+    };
+
+    // The particles are decoration: on the first run start them only once the
+    // page has loaded and the browser is idle, so they never compete with
+    // first paint. After that (a theme switch) start without any wait.
     let cancelIdle = () => {};
 
     const whenIdle = () => {
@@ -290,11 +306,14 @@ export const EmberLayer = () => {
 
       mask.onload = () => {
         body = mask;
+        begin();
       };
       mask.src = PORTRAIT.light.small;
     }
 
-    if (document.readyState === 'complete') {
+    if (warmedUp) {
+      start();
+    } else if (document.readyState === 'complete') {
       whenIdle();
     } else {
       window.addEventListener('load', onLoad, { once: true });
