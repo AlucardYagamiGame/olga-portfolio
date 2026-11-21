@@ -1,5 +1,9 @@
 @use '@/styles/mixins' as *;
 
+.group {
+  white-space: nowrap;
+}
+
 .chip {
   @include chip;
 
