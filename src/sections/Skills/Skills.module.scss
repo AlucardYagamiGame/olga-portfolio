@@ -65,6 +65,10 @@
 .icon {
   @include icon-circle(44px);
 
+  // Keep the icon on its own layer so it is not re-rasterized (and snapped
+  // to the pixel grid) when the hover scale ends.
+  will-change: transform;
+
   @include on-phone {
     width: 36px;
     height: 36px;

@@ -62,14 +62,25 @@
   align-items: center;
   padding: 14px 20px;
   transition:
-    transform $transition,
+    translate $transition,
     box-shadow $transition,
     border-color $transition;
+
+  @include motion {
+    &[data-reveal] {
+      transition:
+        opacity 1s $ease-reveal var(--reveal-delay, 0s),
+        transform 1s $ease-reveal var(--reveal-delay, 0s),
+        translate $transition,
+        box-shadow $transition,
+        border-color $transition;
+    }
+  }
 
   &:hover {
     @include surface-hover;
 
-    transform: translateY(-3px);
+    translate: 0 -3px;
 
     .icon {
       transform: scale(1.05);
@@ -79,6 +90,8 @@
 
 .icon {
   @include icon-circle;
+
+  will-change: transform;
 }
 
 .factTitle {

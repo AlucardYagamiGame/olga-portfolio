@@ -1,4 +1,4 @@
-import { ChevronRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 import styles from './PillLink.module.scss';
 
@@ -44,17 +44,6 @@ export const PillLink = ({
       rel={isExternal ? 'noopener noreferrer' : undefined}
       onClick={onClick}
     >
-      {withArrow && (
-        <span
-          className={styles.arrow}
-          aria-hidden="true"
-        >
-          <ChevronRight
-            size={size === 'sm' ? 14 : 16}
-            strokeWidth={2.5}
-          />
-        </span>
-      )}
       {icon && (
         <span
           className={styles.icon}
@@ -64,6 +53,17 @@ export const PillLink = ({
         </span>
       )}
       <span>{children}</span>
+      {withArrow && (
+        <span
+          className={styles.arrow}
+          aria-hidden="true"
+        >
+          <ArrowRight
+            size={size === 'sm' ? 16 : 18}
+            strokeWidth={2.25}
+          />
+        </span>
+      )}
       {isExternal && <span className="visually-hidden">{externalLabel}</span>}
     </a>
   );

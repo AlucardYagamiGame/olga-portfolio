@@ -34,7 +34,7 @@ export const About = () => {
       />
 
       <div className={styles.grid}>
-        <Reveal className={styles.story}>
+        <div className={styles.story}>
           <Decor
             shape="sparkle"
             size={26}
@@ -44,12 +44,12 @@ export const About = () => {
             <Reveal
               key={paragraph}
               as="p"
-              delay={0.1 + index * 0.1}
+              delay={index * 0.05}
             >
               <RichText text={paragraph} />
             </Reveal>
           ))}
-        </Reveal>
+        </div>
 
         <aside
           className={styles.facts}
