@@ -9,7 +9,7 @@ export const DEVELOPER = {
     handle: 'olga-shcherbatiuk',
   },
   telegram: {
-    url: 'https://t.me/olga_scherbatuik',
-    handle: '@olga_scherbatuik',
+    url: 'https://t.me/olga_shcherbatiuk_dev',
+    handle: '@olga_shcherbatiuk_dev',
   },
 } as const;
