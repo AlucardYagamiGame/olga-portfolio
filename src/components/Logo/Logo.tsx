@@ -26,7 +26,7 @@ export const Logo = ({ label, className }: LogoProps) => (
       className={styles.wordmark}
       aria-hidden="true"
     >
-      Olga
+      Olha
       <sup className={styles.sup}>dev</sup>
     </span>
   </a>

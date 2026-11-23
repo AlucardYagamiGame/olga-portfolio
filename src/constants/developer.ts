@@ -5,11 +5,11 @@ export const DEVELOPER = {
     handle: 'AlucardYagamiGame',
   },
   linkedin: {
-    url: 'https://www.linkedin.com/in/olga-shcherbatiuk',
-    handle: 'olga-shcherbatiuk',
+    url: 'https://www.linkedin.com/in/olha-shcherbatiuk',
+    handle: 'olha-shcherbatiuk',
   },
   telegram: {
-    url: 'https://t.me/olga_shcherbatiuk_dev',
-    handle: '@olga_shcherbatiuk_dev',
+    url: 'https://t.me/olha_shcherbatiuk_dev',
+    handle: '@olha_shcherbatiuk_dev',
   },
 } as const;
