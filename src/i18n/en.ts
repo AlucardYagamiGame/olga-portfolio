@@ -2,10 +2,10 @@ import type { Dictionary } from './types';
 
 export const en: Dictionary = {
   meta: {
-    title: 'Olga Shcherbatiuk | Full Stack Developer',
+    title: 'Olha Shcherbatiuk | Full Stack Developer',
   },
   header: {
-    homeLabel: 'Olga Shcherbatiuk, back to top',
+    homeLabel: 'Olha Shcherbatiuk, back to top',
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
     navLabel: 'Main navigation',
@@ -23,7 +23,7 @@ export const en: Dictionary = {
   },
   hero: {
     greeting: '',
-    name: 'Olga Shcherbatiuk',
+    name: 'Olha Shcherbatiuk',
     roles: [
       'Full Stack Developer',
       'React & TypeScript Developer',
@@ -34,7 +34,7 @@ export const en: Dictionary = {
       'I help engineering teams with {strict typing}, {clean architecture}, {WCAG} accessibility and a {serverless} backend that goes live without running servers.',
     viewProjects: 'See the projects',
     contactMe: 'Discuss your project',
-    photoAlt: 'Photo of Olga Shcherbatiuk',
+    photoAlt: 'Photo of Olha Shcherbatiuk',
     stats: [
       { value: '100%', label: 'Strict TypeScript' },
       { value: 'INP < 200ms', label: 'interaction delay target' },
@@ -145,7 +145,7 @@ export const en: Dictionary = {
   footer: {
     backToTop: 'Back to top',
     connect: 'Connect',
-    rights: (year) => `© ${year} Olga Shcherbatiuk. All rights reserved.`,
+    rights: (year) => `© ${year} Olha Shcherbatiuk. All rights reserved.`,
     openForHire: 'Open for engineering opportunities',
   },
 };

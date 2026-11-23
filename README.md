@@ -1,4 +1,4 @@
-# Olga Shcherbatiuk · Portfolio
+# Olha Shcherbatiuk · Portfolio
 
 A one-page portfolio: hero, about, tech stack, featured projects and contacts.
 
