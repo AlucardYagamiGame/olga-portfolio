@@ -1,10 +1,10 @@
 import { Check, ChevronRight } from 'lucide-react';
-import { useRef, useSyncExternalStore } from 'react';
+import { useMemo, useRef, useSyncExternalStore } from 'react';
 
 import { BrandIcon } from '@/components/BrandIcon';
 import { PillLink } from '@/components/PillLink';
 import { useTheme, useTranslation } from '@/hooks';
-import { canUsePointerEffects } from '@/utils/pointer';
+import { canUsePointerEffects, subscribePointerEffects } from '@/utils/pointer';
 
 import styles from './ProjectCard.module.scss';
 
@@ -24,7 +24,7 @@ const subscribeDesktop = (onChange: () => void) => {
 };
 
 const getDesktop = () => window.matchMedia(DESKTOP_QUERY).matches;
-const getDesktopServer = () => false;
+const getServerFalse = () => false;
 
 interface ProjectCardProps {
   project: Project;
@@ -40,7 +40,12 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
   const isDesktop = useSyncExternalStore(
     subscribeDesktop,
     getDesktop,
-    getDesktopServer,
+    getServerFalse,
+  );
+  const hasPointerEffects = useSyncExternalStore(
+    subscribePointerEffects,
+    canUsePointerEffects,
+    getServerFalse,
   );
   const descriptionInMedia = project.featured && isDesktop;
   const description = (
@@ -50,17 +55,21 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       {text.description}
     </p>
   );
-  const releasedLabel = new Intl.DateTimeFormat(LOCALES[language], {
-    month: 'short',
-    year: 'numeric',
-    timeZone: 'UTC',
-  }).format(new Date(`${project.released}-01`));
+  const releasedLabel = useMemo(
+    () =>
+      new Intl.DateTimeFormat(LOCALES[language], {
+        month: 'short',
+        year: 'numeric',
+        timeZone: 'UTC',
+      }).format(new Date(`${project.released}-01`)),
+    [language, project.released],
+  );
   const size = project.featured ? 'md' : 'sm';
 
   const handleMove = (event: MouseEvent<HTMLElement>) => {
     const card = cardRef.current;
 
-    if (!card || !canUsePointerEffects()) {
+    if (!card || !hasPointerEffects) {
       return;
     }
 
@@ -223,10 +232,6 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
           </div>
         </div>
 
-        <span
-          className={styles.glare}
-          aria-hidden="true"
-        />
         <span
           className={styles.beam}
           aria-hidden="true"

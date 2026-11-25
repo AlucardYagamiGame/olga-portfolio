@@ -19,14 +19,11 @@
     transform 0.2s ease-out,
     border-color $transition,
     box-shadow $transition;
-  will-change: transform;
 
   &:hover {
     @include surface-hover;
 
-    .glare {
-      opacity: 1;
-    }
+    will-change: transform;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -320,7 +317,7 @@
   position: absolute;
   z-index: 2;
   inset: 0;
-  padding: 1px;
+  padding: 1.5px;
   border-radius: inherit;
   background: radial-gradient(
     circle 160px at var(--glare-x, 50%) var(--glare-y, 50%),
@@ -340,17 +337,4 @@
 
 .card:hover .beam {
   opacity: 1;
-}
-
-.glare {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at var(--glare-x, 50%) var(--glare-y, 50%),
-    var(--glare-color),
-    transparent 45%
-  );
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity $transition;
 }
