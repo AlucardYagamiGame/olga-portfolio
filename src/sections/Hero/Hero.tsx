@@ -3,6 +3,7 @@ import { TypeAnimation } from 'react-type-animation';
 
 // import avatar from '@/assets/avatar.webp'; // original photo, kept for reference
 import { Decor } from '@/components/Decor';
+import { FlameLink } from '@/components/FlameLink';
 import { ParticlePortrait } from '@/components/ParticlePortrait';
 import { PillLink } from '@/components/PillLink';
 import { RichText } from '@/components/RichText';
@@ -117,12 +118,12 @@ export const Hero = () => {
               className={styles.settle}
               style={delay(0.9)}
             >
-              <PillLink
+              <FlameLink
                 href="#contacts"
                 withArrow
               >
                 {t.hero.contactMe}
-              </PillLink>
+              </FlameLink>
             </span>
             <span
               className={styles.enter}
