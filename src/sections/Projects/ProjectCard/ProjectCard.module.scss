@@ -19,14 +19,11 @@
     transform 0.2s ease-out,
     border-color $transition,
     box-shadow $transition;
-  will-change: transform;
 
   &:hover {
     @include surface-hover;
 
-    .glare {
-      opacity: 1;
-    }
+    will-change: transform;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -154,6 +151,32 @@
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 6px;
+
+  // Desktop and tablet: the buttons share the full width of the card in equal
+  // columns (two buttons side by side, four as a 2x2 grid).
+  @media (width > $breakpoint-phone) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+
+    > a {
+      justify-content: center;
+      padding-block: 12px;
+      font-size: 0.95rem;
+      white-space: normal;
+    }
+  }
+
+  // The card's main button is violet in both themes, so it does not follow the
+  // near-black primary button of the light theme.
+  --btn-primary-bg: linear-gradient(135deg, #4d19b1, #6f5adc);
+  --btn-primary-shadow:
+    0 10px 30px rgba(111, 90, 220, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+// The chevron glyph only fills the middle ~4px of its 16px box, so the empty
+// sides are trimmed to keep the gap to the label close to the other buttons.
+.chevron {
+  margin-inline: -4px;
 }
 
 .featured {
@@ -320,7 +343,7 @@
   position: absolute;
   z-index: 2;
   inset: 0;
-  padding: 1px;
+  padding: 1.5px;
   border-radius: inherit;
   background: radial-gradient(
     circle 160px at var(--glare-x, 50%) var(--glare-y, 50%),
@@ -340,17 +363,4 @@
 
 .card:hover .beam {
   opacity: 1;
-}
-
-.glare {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at var(--glare-x, 50%) var(--glare-y, 50%),
-    var(--glare-color),
-    transparent 45%
-  );
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity $transition;
 }

@@ -1,0 +1,177 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.wrap {
+  // Flame palette, in the site's own colours: a white-hot core, the site's
+  // turquoise highlight (--color-highlight) as the body of the flame, and the
+  // sky blue of the beam border (--beam-a) as its cool edge. Sky blue is also
+  // the bridge into the button's violet, so the fade never turns muddy.
+  --flame-white: 244, 255, 254;
+  --flame-light: 159, 240, 236;
+  --flame-mid: 34, 200, 190;
+  --flame-edge: 56, 189, 248;
+  --flame-ink: #0a2a33;
+  --flame-x: 0px;
+  --flame-text-x: 0px;
+  --flame-heat: 0;
+  --flame-glow: 0;
+  --flame-arrow-heat: 0;
+  --flame-side: 88%;
+
+  position: relative;
+  display: inline-flex;
+  border-radius: $radius-pill;
+  isolation: isolate;
+}
+
+// Outer aura: flares on the side the cursor is closer to.
+.aura {
+  position: absolute;
+  z-index: -1;
+  inset: -8px;
+  display: none;
+  border-radius: $radius-pill;
+  background: radial-gradient(
+    ellipse 44% 85% at var(--flame-side) 50%,
+    rgba(var(--flame-light), 1) 0%,
+    rgba(var(--flame-mid), 0.95) 28%,
+    rgba(var(--flame-edge), 0.5) 50%,
+    rgba(var(--flame-edge), 0.12) 68%,
+    transparent 80%
+  );
+  filter: blur(8px) saturate(1.5);
+  opacity: var(--flame-heat);
+  pointer-events: none;
+
+  @include pointer-effects {
+    display: block;
+  }
+}
+
+a.link {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  // No border: overflow clips at the padding edge, so even a transparent 1px
+  // border would leave a dark ring of the button's own background around the
+  // flame. The pill keeps its size because the padding grows by that 1px.
+  padding: 13px 25px;
+  border-width: 0;
+  transition:
+    transform $transition,
+    box-shadow $transition,
+    filter $transition,
+    background $transition,
+    color 0.15s ease-out;
+
+  // The flame replaces the default hover glow, but only where it can run.
+  @include pointer-effects {
+    &:hover {
+      box-shadow: var(--btn-primary-shadow);
+      filter: none;
+    }
+  }
+}
+
+// Hot spot inside the pill: follows the cursor, sits under the label.
+.core {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  display: none;
+  opacity: var(--flame-glow);
+  pointer-events: none;
+
+  @include pointer-effects {
+    display: block;
+  }
+}
+
+.halo,
+.ember,
+.glow {
+  position: absolute;
+  top: 50%;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+// Bridge between the bright core and the button's own colour, so the light
+// melts into the button instead of ending on a hard edge.
+.halo {
+  left: calc(var(--flame-x) - 150px);
+  width: 300px;
+  height: 140px;
+  background: radial-gradient(
+    closest-side,
+    rgba(var(--flame-mid), 0.75) 0%,
+    rgba(var(--flame-edge), 0.4) 45%,
+    rgba(var(--flame-edge), 0.12) 75%,
+    transparent 100%
+  );
+  filter: blur(10px);
+}
+
+.ember {
+  left: calc(var(--flame-x) - 60.5px);
+  width: 121px;
+  height: 121px;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgb(var(--flame-white)) 3.5%,
+    rgb(var(--flame-mid)) 26.5%,
+    rgb(var(--flame-light)) 37.5%,
+    rgba(var(--flame-mid), 0.5) 49%,
+    rgba(var(--flame-edge), 0) 92.5%
+  );
+}
+
+.glow {
+  left: calc(var(--flame-x) - 102px);
+  width: 204px;
+  height: 103px;
+  background: radial-gradient(
+    43.3% 44.23% at 50% 49.51%,
+    rgb(var(--flame-white)) 16%,
+    rgba(var(--flame-light), 0.95) 38%,
+    rgba(var(--flame-mid), 0.8) 58%,
+    rgba(var(--flame-edge), 0.38) 80%,
+    rgba(var(--flame-edge), 0) 100%
+  );
+  filter: blur(5px);
+}
+
+// The label and the arrow sit on the flame, so they darken with it: the label
+// follows the flame with a gradient fill, the arrow darkens when it is close.
+.label {
+  display: inline-block;
+}
+
+// --flame-glow eases in and out together with the flame, and the dark ink
+// blends back into white with it, so the label fades with the light behind it
+// instead of snapping to white while the glow is still there.
+.wrap[data-hot='true'] {
+  .label {
+    background: radial-gradient(
+      circle 72px at var(--flame-text-x) 50%,
+      color-mix(in srgb, var(--flame-ink) calc(var(--flame-glow) * 100%), #fff)
+        0%,
+      color-mix(in srgb, var(--flame-ink) calc(var(--flame-glow) * 100%), #fff)
+        72%,
+      #fff 100%
+    );
+    background-clip: text;
+    color: transparent;
+  }
+
+  // The arrow is an icon, so it cannot take a gradient fill: it darkens as a
+  // whole when the flame gets close to it.
+  .link {
+    color: color-mix(
+      in srgb,
+      var(--flame-ink) calc(var(--flame-arrow-heat) * 100%),
+      #ffffff
+    );
+  }
+}

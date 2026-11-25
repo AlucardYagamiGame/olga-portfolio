@@ -9,7 +9,15 @@ const FOLLOW_FACTOR = 0.35;
 const HIDE_DELAY = 120;
 const DOTS = Array.from({ length: DOTS_COUNT }, (_, index) => index);
 const NO_EFFECTS_SELECTOR = 'header';
+const SWITCH_SELECTOR = '[data-cursor-effects]';
 const OFFSCREEN = '-1000px';
+const SETTLE_DISTANCE = 0.1;
+
+const isEffectsOff = (target: Element | null) =>
+  target !== null &&
+  (target.closest(NO_EFFECTS_SELECTOR) !== null ||
+    target.closest(SWITCH_SELECTOR)?.getAttribute('data-cursor-effects') ===
+      'off');
 
 export const CursorEffects = () => {
   const trailRef = useRef<HTMLDivElement>(null);
@@ -30,11 +38,20 @@ export const CursorEffects = () => {
     let isSuppressed = false;
 
     const animate = () => {
+      let isMoving = false;
+
       positions.forEach((point, index) => {
         const target = index === 0 ? mouse : positions[index - 1];
 
         point.x += (target.x - point.x) * FOLLOW_FACTOR;
         point.y += (target.y - point.y) * FOLLOW_FACTOR;
+
+        if (
+          Math.abs(target.x - point.x) > SETTLE_DISTANCE ||
+          Math.abs(target.y - point.y) > SETTLE_DISTANCE
+        ) {
+          isMoving = true;
+        }
 
         const scale = 1 - index / (DOTS_COUNT + 4);
 
@@ -42,7 +59,19 @@ export const CursorEffects = () => {
           `translate3d(${point.x}px, ${point.y}px, 0) scale(${scale})`;
       });
 
+      if (!isMoving && trail.dataset.visible === 'false') {
+        frame = 0;
+
+        return;
+      }
+
       frame = requestAnimationFrame(animate);
+    };
+
+    const start = () => {
+      if (!frame) {
+        frame = requestAnimationFrame(animate);
+      }
     };
 
     const hide = () => {
@@ -55,7 +84,7 @@ export const CursorEffects = () => {
     const handleMove = (event: PointerEvent) => {
       const target = event.target instanceof Element ? event.target : null;
 
-      if (target?.closest(NO_EFFECTS_SELECTOR)) {
+      if (isEffectsOff(target)) {
         isSuppressed = true;
         hide();
 
@@ -76,6 +105,7 @@ export const CursorEffects = () => {
       root.style.setProperty('--mouse-x', `${event.clientX}px`);
       root.style.setProperty('--mouse-y', `${event.clientY}px`);
       trail.dataset.visible = 'true';
+      start();
       window.clearTimeout(hideTimer);
       hideTimer = window.setTimeout(() => {
         trail.dataset.visible = 'false';
@@ -83,7 +113,7 @@ export const CursorEffects = () => {
     };
 
     window.addEventListener('pointermove', handleMove, { passive: true });
-    frame = requestAnimationFrame(animate);
+    start();
 
     return () => {
       window.removeEventListener('pointermove', handleMove);
