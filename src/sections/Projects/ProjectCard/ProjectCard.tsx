@@ -203,6 +203,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                 variant="accent"
                 icon={
                   <ChevronRight
+                    className={styles.chevron}
                     size={16}
                     strokeWidth={2.5}
                     aria-hidden="true"
@@ -219,9 +220,11 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                 size={size}
                 variant="secondary"
                 icon={
-                  <BrandIcon
-                    brand="github"
+                  <ChevronRight
+                    className={styles.chevron}
                     size={16}
+                    strokeWidth={2.5}
+                    aria-hidden="true"
                   />
                 }
                 externalLabel={externalLabel}
