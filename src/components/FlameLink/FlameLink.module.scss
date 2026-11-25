@@ -14,6 +14,7 @@
   --flame-x: 0px;
   --flame-text-x: 0px;
   --flame-heat: 0;
+  --flame-glow: 0;
   --flame-arrow-heat: 0;
   --flame-side: 88%;
 
@@ -79,9 +80,8 @@ a.link {
   z-index: -1;
   inset: 0;
   display: none;
-  opacity: 0;
+  opacity: var(--flame-glow);
   pointer-events: none;
-  transition: opacity 0.15s ease-out;
 
   @include pointer-effects {
     display: block;
@@ -148,17 +148,18 @@ a.link {
   display: inline-block;
 }
 
+// --flame-glow eases in and out together with the flame, and the dark ink
+// blends back into white with it, so the label fades with the light behind it
+// instead of snapping to white while the glow is still there.
 .wrap[data-hot='true'] {
-  .core {
-    opacity: 1;
-  }
-
   .label {
     background: radial-gradient(
       circle 72px at var(--flame-text-x) 50%,
-      var(--flame-ink) 0%,
-      var(--flame-ink) 72%,
-      #ffffff 100%
+      color-mix(in srgb, var(--flame-ink) calc(var(--flame-glow) * 100%), #fff)
+        0%,
+      color-mix(in srgb, var(--flame-ink) calc(var(--flame-glow) * 100%), #fff)
+        72%,
+      #fff 100%
     );
     background-clip: text;
     color: transparent;

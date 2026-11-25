@@ -9,6 +9,7 @@ import type { ReactNode } from 'react';
 
 const FOLLOW = 0.25;
 const HEAT_EASE = 0.15;
+const GLOW_EASE = 0.2;
 const SETTLE_DISTANCE = 0.3;
 const SETTLE_HEAT = 0.002;
 const HEAT_BOOST = 1.12;
@@ -43,6 +44,8 @@ export const FlameLink = ({ href, children, withArrow }: FlameLinkProps) => {
     let targetX = 0;
     let heat = 0;
     let targetHeat = 0;
+    let glow = 0;
+    let targetGlow = 0;
     let frame = 0;
 
     const paint = () => {
@@ -52,14 +55,18 @@ export const FlameLink = ({ href, children, withArrow }: FlameLinkProps) => {
         `${(x - labelLeft).toFixed(1)}px`,
       );
       wrap.style.setProperty('--flame-heat', heat.toFixed(3));
+      wrap.style.setProperty('--flame-glow', glow.toFixed(3));
       wrap.style.setProperty(
         '--flame-arrow-heat',
-        Math.min(
-          1,
-          Math.max(
-            0,
-            (ARROW_FAR - Math.abs(x - arrowCenter)) / (ARROW_FAR - ARROW_NEAR),
-          ),
+        (
+          Math.min(
+            1,
+            Math.max(
+              0,
+              (ARROW_FAR - Math.abs(x - arrowCenter)) /
+                (ARROW_FAR - ARROW_NEAR),
+            ),
+          ) * glow
         ).toFixed(3),
       );
     };
@@ -67,16 +74,24 @@ export const FlameLink = ({ href, children, withArrow }: FlameLinkProps) => {
     const tick = () => {
       x += (targetX - x) * FOLLOW;
       heat += (targetHeat - heat) * HEAT_EASE;
+      glow += (targetGlow - glow) * GLOW_EASE;
 
       // Stops once it has caught up; the next pointer move restarts it.
       if (
         Math.abs(targetX - x) < SETTLE_DISTANCE &&
-        Math.abs(targetHeat - heat) < SETTLE_HEAT
+        Math.abs(targetHeat - heat) < SETTLE_HEAT &&
+        Math.abs(targetGlow - glow) < SETTLE_HEAT
       ) {
         x = targetX;
         heat = targetHeat;
+        glow = targetGlow;
         paint();
         frame = 0;
+
+        // The flame has fully faded out, so the label's flame styling can go.
+        if (targetGlow === 0) {
+          delete wrap.dataset.hot;
+        }
 
         return;
       }
@@ -125,14 +140,22 @@ export const FlameLink = ({ href, children, withArrow }: FlameLinkProps) => {
 
       x = event.clientX - rect.left;
       measure(rect);
-      heat = 0;
+
+      // Entering again while the flame is still fading keeps it, no pop.
+      if (!wrap.dataset.hot) {
+        heat = 0;
+        glow = 0;
+      }
       wrap.dataset.hot = 'true';
+      targetGlow = 1;
       track(event);
     };
 
+    // data-hot stays until the flame has faded out, so the label does not
+    // snap back to white while the glow is still behind it.
     const handleLeave = () => {
-      delete wrap.dataset.hot;
       targetHeat = 0;
+      targetGlow = 0;
       start();
     };
 
