@@ -92,7 +92,7 @@ export const en: Dictionary = {
     description: '',
     code: 'Code',
     personal: 'Personal version',
-    personalCode: 'Code PV',
+    personalCode: 'Code (PV)',
     demo: 'Live demo',
     screenshotAlt: (title) => `Screenshot of ${title}`,
     items: {
@@ -102,9 +102,9 @@ export const en: Dictionary = {
         description:
           'An online gadget store with the whole path to a purchase: catalog filters and search, a cart and favourites synced to the account, checkout with Nova Poshta branch search and an AI assistant that helps customers find and compare products.',
         highlights: [
-          'Secure by design: API keys stay on the server, so no leaked keys or surprise bills',
-          'Keeps the catalog online even without the database: falls back to bundled data',
-          'Two languages and two themes from one codebase',
+          'Security: API keys stay on the server',
+          'Fault tolerance: catalog stays online on fallback data if the database fails',
+          'Personalization: clean interface switching between two languages and themes',
         ],
       },
       todoApp: {
@@ -125,7 +125,7 @@ export const en: Dictionary = {
     comingSoon: {
       badge: 'Coming soon',
       title: 'More projects in progress',
-      text: 'I am building new projects right now. Follow me on GitHub to see them first.',
+      text: '',
       link: 'Follow on GitHub',
     },
   },
