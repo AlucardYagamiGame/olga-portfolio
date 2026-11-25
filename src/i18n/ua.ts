@@ -92,7 +92,7 @@ export const ua: Dictionary = {
     description: '',
     code: 'Код',
     personal: 'Персональна версія',
-    personalCode: 'Code PV',
+    personalCode: 'Код ПВ',
     demo: 'Демо',
     screenshotAlt: (title) => `Скріншот проєкту ${title}`,
     items: {
