@@ -84,6 +84,11 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity $transition;
+
+  // On the light background a 1.5px line is too faint, so it is thicker.
+  :global(:root[data-theme='light']) & {
+    padding: 2.5px;
+  }
 }
 
 .card:hover .beam {
