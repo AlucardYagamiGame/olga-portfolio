@@ -147,22 +147,31 @@
 }
 
 .links {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin-top: 6px;
 
-  // Desktop and tablet: the buttons share the full width of the card in equal
-  // columns (two buttons side by side, four as a 2x2 grid).
-  @media (width > $breakpoint-phone) {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  // The buttons share the full width of the card in two equal columns (two
+  // buttons side by side, four as a 2x2 grid), tall enough to tap.
+  > a {
+    justify-content: center;
+    min-height: 44px;
+    white-space: normal;
+    text-align: center;
+  }
 
+  @media (width > $breakpoint-phone) {
     > a {
-      justify-content: center;
       padding-block: 12px;
       font-size: 0.95rem;
-      white-space: normal;
+    }
+  }
+
+  @include on-phone {
+    > a {
+      padding-inline: 12px;
+      font-size: 0.9rem;
     }
   }
 
