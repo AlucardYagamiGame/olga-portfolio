@@ -180,6 +180,20 @@
   --btn-primary-bg: linear-gradient(135deg, #4d19b1, #6f5adc);
   --btn-primary-shadow:
     0 10px 30px rgba(111, 90, 220, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+  // Light theme: a lighter violet (white label stays above 4.5:1) and code
+  // buttons in the same near-black as the header button.
+  :global(:root[data-theme='light']) & {
+    --btn-primary-bg: linear-gradient(135deg, #5a2fc9, #7a5fe0);
+    --btn-primary-shadow:
+      0 8px 22px rgba(111, 90, 220, 0.26),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    --btn-secondary-bg: linear-gradient(180deg, #2c2c2c 0%, #111 100%);
+    --btn-secondary-border: transparent;
+    --btn-secondary-text: #fff;
+    --surface-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    --surface-shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.22);
+  }
 }
 
 // The chevron glyph only fills the middle ~4px of its 16px box, so the empty
@@ -203,19 +217,6 @@
 
     @include on-tablet {
       display: flex;
-    }
-  }
-
-  .links {
-    align-items: stretch;
-
-    @include on-phone {
-      flex-direction: column;
-
-      > a {
-        justify-content: center;
-        white-space: normal;
-      }
     }
   }
 
